@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "export": "next build && next export",
+    "deploy": "next build && next export && firebase deploy --only hosting",
     "test": "jest --watch"
   },
   "dependencies": {
@@ -14,6 +15,7 @@
     "@emotion/styled": "^11.6.0",
     "@tailwindcss/forms": "^0.3.4",
     "daisyui": "^1.16.2",
+    "firebase": "^9.6.0",
     "gsap": "^3.8.0",
     "install": "^0.13.0",
     "next": "12.0.4",
