@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
-import style from '../styles/elements/Main.module.scss';
 
 export default function Layout({children, title = 'フリー素材サイト Shizukuya.org made by Shizukuya', noindex = false, description}: {children: any, title: string, noindex: boolean, description: string}) {
   return (
@@ -24,7 +23,6 @@ export default function Layout({children, title = 'フリー素材サイト Shiz
         <meta property="og:site_name" content="Shizukuya.org Shizukuya" />
         { noindex ? <meta name="robots" content="noindex" /> : <meta name="robots" content="index,follow" /> }
       </Head>
-      <Header />
       {children}
       <Footer />
     </div>

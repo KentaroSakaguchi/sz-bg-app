@@ -7,5 +7,8 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require('tailwind-hamburgers')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('daisyui')
+  ],
 }
