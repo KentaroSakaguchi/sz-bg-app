@@ -7,6 +7,7 @@ import Top from  '../components/Top';
 import Donation from '../components/Donation';
 import { css, jsx } from '@emotion/react'
 import 'scroll-behavior-polyfill';
+import '../src/firebase';
 
 export default function Home() {
   return (
