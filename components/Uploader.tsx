@@ -9,9 +9,8 @@ export default function Uploader({}) {
   const getFunctionInit = getFunctions();
   const addMessageFunctions = httpsCallable(getFunctionInit, 'addMessage');
 
-
   const uploadToServer = async (data) => {
-    const validateMb = 10485760	; // 10MB
+    const validateMb = 10000000; // 10MB
     const [fileTypeJpeg, fileTypePng] = ['image/jpeg', 'image/png'];
     const  [imgTypeErrorText, imgSizeErrorText] = ['画像', '10MBまで'];
 
