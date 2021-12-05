@@ -6,6 +6,7 @@ import Contact from  '../components/Contact';
 import Top from  '../components/Top';
 import Donation from '../components/Donation';
 import { css, jsx } from '@emotion/react'
+import 'scroll-behavior-polyfill';
 
 export default function Home() {
   return (

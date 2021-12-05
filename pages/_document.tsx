@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import "scroll-behavior-polyfill";
 import { css, jsx } from '@emotion/react';
 
 class MyApp extends Document {
