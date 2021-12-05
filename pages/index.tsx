@@ -8,6 +8,23 @@ import Donation from '../components/Donation';
 import { css, jsx } from '@emotion/react'
 import 'scroll-behavior-polyfill';
 import '../src/firebase';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+
+// 認証
+const init = (account: any, password: any) => {
+  const auth = getAuth();
+  signInWithEmailAndPassword(auth, account, password)
+    .then((userCredential) => {
+      return true;
+    })
+    .catch((error) => {
+      console.log('error')
+      console.log(error)
+      return false;
+    });
+};
+
+init(process.env.MAIL_ACCOUNT, process.env.MAIL_PASSWORD);
 
 export default function Home() {
   return (
