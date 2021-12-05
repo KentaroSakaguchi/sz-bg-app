@@ -5,9 +5,29 @@ import { getFunctions, httpsCallable } from 'firebase/functions';
 
 export default function Uploader({}) {
   const [imageURL, setCreateObjectURL] = useState(null);
-  const b = getFunctions();
-  const addMessageFunctions = httpsCallable(b, 'addMessage');
+  const [errorText, setErrorText] = useState(null);
+  const getFunctionInit = getFunctions();
+  const addMessageFunctions = httpsCallable(getFunctionInit, 'addMessage');
+
+
   const uploadToServer = async (data) => {
+    const validateMb = 10485760	; // 10MB
+    const [fileTypeJpeg, fileTypePng] = ['image/jpeg', 'image/png'];
+    const  [imgTypeErrorText, imgSizeErrorText] = ['画像', '10MBまで'];
+
+    if (data.type !== fileTypeJpeg && data.type !== fileTypePng) {
+      setErrorText(imgTypeErrorText);
+      setCreateObjectURL(null);
+      return;
+    }
+
+    if (data.size > validateMb) {
+      setErrorText(imgSizeErrorText);
+      setCreateObjectURL(null);
+      return;
+    }
+
+    setErrorText(null);
 
     if (location.href === 'http://localhost:3000/') {
       const body = new FormData();
@@ -86,6 +106,16 @@ export default function Uploader({}) {
             </p>
           </div>
         </div>
+        {errorText &&
+          <div className="alert alert-error mt-2">
+            <div className="flex-1">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="w-6 h-6 mx-2 stroke-current">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+              </svg>
+              <label>{errorText}</label>
+            </div>
+          </div>
+        }
         <div className="flex justify-center items-center mt-8">
           <button type="button" className="focus:outline-none w-32 py-2 rounded-md font-semibold text-white bg-indigo-500 ring-4 ring-indigo-300">Button</button>
         </div>
