@@ -8,7 +8,7 @@ export default function Uploader({}) {
   const b = getFunctions();
   const addMessageFunctions = httpsCallable(b, 'addMessage');
   const uploadToServer = async (data) => {
-    addMessageFunctions('画像up');
+
     if (location.href === 'http://localhost:3000/') {
       const body = new FormData();
       body.append("file", data);
@@ -27,7 +27,7 @@ export default function Uploader({}) {
           // Let's get a download URL for the file.
           getDownloadURL(snapshot.ref).then((url) => {
             console.log('File available at', url);
-            // ...
+            addMessageFunctions(`画像up: ${url}`);
           });
         }).catch((error) => {
           console.error('Upload failed', error);
