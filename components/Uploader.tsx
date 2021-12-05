@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { css, jsx } from '@emotion/react';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getFunctions, httpsCallable } from 'firebase/functions';
+
 export default function Uploader({}) {
   const [imageURL, setCreateObjectURL] = useState(null);
-
+  const b = getFunctions();
+  const addMessageFunctions = httpsCallable(b, 'addMessage');
   const uploadToServer = async (data) => {
+    addMessageFunctions('画像up');
     if (location.href === 'http://localhost:3000/') {
       const body = new FormData();
       body.append("file", data);

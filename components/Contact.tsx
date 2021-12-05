@@ -1,7 +1,8 @@
 // import firebase from '../src/firebase';
 import React, { useEffect, useState } from 'react';
-// import isEmail from 'validator/lib/isEmail';
+import { httpsCallable } from 'firebase/functions';
 
+// import isEmail from 'validator/lib/isEmail';
 // 認証
 // const init = (account: any, password: any) => {
 //   firebase.auth().signInWithEmailAndPassword(account, password)
