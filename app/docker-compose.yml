@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  app:
+    container_name: sz-bg-app
+    image: sz-bg-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - './:/app'
+    ports:
+      - '9000:8080'
