@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  docker-jupyter-lab:
+    container_name: docker-jupyter-lab
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: jupyter-lab --ip=* --allow-root
+    tty: true
+    working_dir: '/root/'
+    volumes:
+      - ./app:/root
+    ports:
+      - '8888:8888'

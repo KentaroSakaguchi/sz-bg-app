@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { css, jsx } from '@emotion/react';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getFunctions, httpsCallable } from 'firebase/functions';
+import axios from 'axios';
 
 export default function Uploader({}) {
   const [imageURLs, setCreateObjectURLs] = useState([]);
@@ -107,6 +108,25 @@ export default function Uploader({}) {
     console.log(imageCounterValue)
   }, [imageNames]);
 
+  const sendImg = async () => {
+    const headers = new Headers({'X-Requested-With': 'XMLHttpRequest'});
+    const body = new FormData();
+    body.append("file", '{}');
+    await fetch("http://localhost:9000/2015-03-31/functions/function/invocations", {
+      method: "POST",
+      body,
+      // headers
+    });
+
+    // axios.post('http://localhost:9000/2015-03-31/functions/function/invocations', {
+    //   body,
+    //   headers
+    // })
+    // .then(function (response) {
+    //   console.log(response.data);
+    // })
+  };
+
   return (
     <section className="mt-16">
       <h1 className="text-xl font-bold" id="upload">Upload</h1>
@@ -145,7 +165,7 @@ export default function Uploader({}) {
           </div>
         }
         <div className="flex justify-center items-center mt-8">
-          <button type="button" className="focus:outline-none w-32 py-2 rounded-md font-semibold text-white bg-indigo-500 ring-4 ring-indigo-300">Button</button>
+          <button onClick={sendImg} type="button" className="focus:outline-none w-32 py-2 rounded-md font-semibold text-white bg-indigo-500 ring-4 ring-indigo-300">Button</button>
         </div>
         {imageURLs.length !== 0 && <h1 className="text-xl font-bold">Upload images</h1>}
         {imageURLs && imageURLs.map((data: any, index: number) => (
