@@ -3,6 +3,10 @@ import { css, jsx } from '@emotion/react';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import axios from 'axios';
+import { createWorker } from 'tesseract.js';
+import { StartCamera, CameraImageStyle, CameraButtonStyle, CameraCloseButtonStyle } from './UploaderModules/StartCamera';
+import { MakeText } from './UploaderModules/MakeText';
+import { CopyText } from './UploaderModules/CopyText';
 
 export default function Uploader({}) {
   const [imageURLs, setCreateObjectURLs] = useState([]);
@@ -13,9 +17,14 @@ export default function Uploader({}) {
   const addMessageFunctions = httpsCallable(getFunctionInit, 'addMessage');
   const validateMb = 10000000; // 10MB
   const [fileTypeJpeg, fileTypePng] = ['image/jpeg', 'image/png'];
-  const  [imgTypeErrorText, imgSizeErrorText, imgCountErrorText] = ['画像', '10MBまで', '5枚まで'];
+  const [imgTypeErrorText, imgSizeErrorText, imgCountErrorText] = ['対応しているフォーマットはPNG, JPGになります', '10MBまで', '画像1枚のみドロップしてください'];
+  const [rexultText, setRexultText] = useState('');
+  const [camera, setCamera] = useState(false);
+  const [progressStyle, progressStyleChange] = useState(css`width: 0`);
+  const [log, setLog] = useState({status: '', progress: 0});
 
   const uploadToServer = async (data) => {
+    console.log(data);
     if (data.type !== fileTypeJpeg && data.type !== fileTypePng) {
       setErrorText(imgTypeErrorText);
       setCreateObjectURLs([]);
@@ -31,19 +40,45 @@ export default function Uploader({}) {
     }
 
     setErrorText(null);
-    console.log(imageCounterValue)
+    // console.log(imageCounterValue)
+
+    // extractText
+    const worker = createWorker({
+      logger: (m) => {
+        setLog({
+          status: m.status,
+          progress: m.progress,
+        });
+      },
+    });
+
+    // extractText
+    const extractText = async (dataName) => {
+      await worker.load();
+      await worker.loadLanguage('jpn');
+      await worker.initialize('jpn');
+      const { data: { text } } = await worker.recognize(dataName);
+      const textData = MakeText(text);
+      setRexultText(textData);
+      await worker.terminate();
+    };
 
     if (location.host === 'localhost:3000') {
       const body = new FormData();
-      body.append("file", data);
-      const response = await fetch("/api/file", {
-        method: "POST",
+      body.append('file', data);
+
+      const response = await fetch('/api/file', {
+        method: 'POST',
         body
+      }).then(() => {
+        console.log(location.href + data.name)
+        extractText(location.href + data.name);
       });
+
     } else {
       const storage = getStorage();
       const imageRef = ref(storage, 'images/' + data.name);
-      console.log(imageRef)
+
       uploadBytesResumable(imageRef, data, data)
         .then((snapshot) => {
           console.log('Uploaded', snapshot.totalBytes, 'bytes.');
@@ -52,12 +87,18 @@ export default function Uploader({}) {
           getDownloadURL(snapshot.ref).then((url) => {
             console.log('File available at', url);
             addMessageFunctions(`画像up: ${url}`);
+            extractText(url);
           });
+
         }).catch((error) => {
           console.error('Upload failed', error);
           // ...
         });
     }
+
+    // const grayImage = ChangeGrayscale(imageURLs[0])
+    // grayScaleImageNameSet(grayImage);
+    // console.log(grayScaleImageName);
   };
 
   const upload = (event) => {
@@ -82,7 +123,7 @@ export default function Uploader({}) {
     event.preventDefault();
     dropStyleChange(null);
 
-    if (event.dataTransfer.files.length > 5) {
+    if (event.dataTransfer.files.length > 1) {
       setErrorText(imgCountErrorText);
       return;
     }
@@ -104,28 +145,25 @@ export default function Uploader({}) {
   };
 
   useEffect(() => {
-    // useStateが実行された後に実行される関数
-    console.log(imageCounterValue)
-  }, [imageNames]);
+    // console.log(log)
+    progressStyleChange(css`width: ${log.progress * 100}%;`);
+    camera ? StartCamera('open') : StartCamera('close');
+  }, [setCreateObjectNames, setCreateObjectURLs, camera, log, progressStyleChange]);
 
-  const sendImg = async () => {
-    const headers = new Headers({'X-Requested-With': 'XMLHttpRequest'});
-    const body = new FormData();
-    body.append("file", '{}');
-    await fetch("http://localhost:9000/2015-03-31/functions/function/invocations", {
-      method: "POST",
-      body,
-      // headers
-    });
+  const [copyStyle, copyStyleChange] = useState(null);
 
-    // axios.post('http://localhost:9000/2015-03-31/functions/function/invocations', {
-    //   body,
-    //   headers
-    // })
-    // .then(function (response) {
-    //   console.log(response.data);
-    // })
+  const copy = (textdata) => {
+    CopyText(textdata);
+    copyStyleChange(css`opacity: 1; visibility: visible;`);
+
+    setTimeout(() => {
+      copyStyleChange(css`opacity: 0; visibility: hidden;`);
+    }, 2000)
   };
+
+  // const cameraInit = (bool) => {
+  //   setCamera(bool);
+  // };
 
   return (
     <section className="mt-16">
@@ -143,11 +181,7 @@ export default function Uploader({}) {
               <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <div className="flex text-sm text-gray-600">
-              <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                <span className="p-2">画像を選択</span>
-                <input id="file-upload" name="file-upload" type="file" accept="image/jpeg,image/png" className="sr-only" onChange={upload} />
-              </label>
-              <p className="pl-1">or drag and drop</p>
+              <p className="text-xl font-bold">drag and drop</p>
             </div>
             <p className="text-xs text-gray-500">
               PNG, JPG up to 10MB
@@ -164,13 +198,70 @@ export default function Uploader({}) {
             </div>
           </div>
         }
-        <div className="flex justify-center items-center mt-8">
-          <button onClick={sendImg} type="button" className="focus:outline-none w-32 py-2 rounded-md font-semibold text-white bg-indigo-500 ring-4 ring-indigo-300">Button</button>
+        <div className="mt-8 flex lg:flex-shrink-0 justify-center items-center">
+          <label className="inline-flex rounded-md shadow" htmlFor="file-upload">
+            <span className="cursor-pointer inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700">画像を選択</span>
+            <input id="file-upload" name="file-upload" type="file" accept="image/jpeg,image/png" className="sr-only" onChange={upload} />
+          </label>
+          {/* <div className="ml-3 inline-flex rounded-md shadow">
+            <button onClick={() => cameraInit(true)} type="button" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50">
+              カメラを起動
+            </button>
+          </div>
+          {camera &&
+            <div>
+              <canvas id="canvas" css={CameraImageStyle} width={window.innerWidth} height={window.innerHeight}></canvas>
+              <button type="button" css={CameraButtonStyle} onClick={() => { StartCamera('take') }}>撮影</button>
+              <button type="button" css={CameraCloseButtonStyle} onClick={() => cameraInit(false)}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 93.93 93.93">
+                  <path d="M228.8,366.15l38.43-38.42a5,5,0,0,0-7.08-7.08l-38.42,38.43L183.3,320.65a5,5,0,1,0-7.07,7.08l38.42,38.42-38.42,38.43a5,5,0,1,0,7.07,7.07l38.43-38.42,38.42,38.42a5,5,0,1,0,7.08-7.07Z" transform="translate(-174.76 -319.19)" />
+              </svg>
+              </button>
+              <video className="hidden" id="camera"></video>
+            </div>
+          } */}
         </div>
-        {imageURLs.length !== 0 && <h1 className="text-xl font-bold">Upload images</h1>}
+        {log.status &&
+          <div className="relative pt-1 mt-16">
+            <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-indigo-200">
+              <div css={progressStyle} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500"></div>
+            </div>
+            {
+              log.status === 'recognizing text' && <div className="flex text-sm text-gray-600 justify-center items-center">
+                <p className="text-xl font-bold">画像解析中: {Math.floor(log.progress * 100)}%</p>
+              </div>
+            }
+            {
+              log.status !== 'recognizing text' && <div className="flex text-sm text-gray-600 justify-center items-center">
+                <p className="text-xl font-bold">画像読み取り中</p>
+              </div>
+            }
+          </div>
+        }
+        <div className="relative">
+          {rexultText &&
+            <div>
+              <h1 className="mt-16 text-xl font-bold">Results / 出力結果</h1>
+              <div className="mt-8 bg-indigo-600 rounded-xl py-3 px-3">
+                <p className="whitespace-pre-wrap mt-2 text-lg text-white">{rexultText}</p>
+              </div>
+              <div className="mt-8 flex lg:flex-shrink-0 justify-center items-center">
+                <div className="ml-3 inline-flex rounded-md shadow">
+                  <button onClick={() => copy(rexultText)} type="button" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50">
+                    テキストをコピーする
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+          <div className="h-32 absolute inset-0 z-20 m-auto py-3 px-3 flex items-center justify-center bg-indigo-300 rounded-xl transition-all ease-in-out opacity-0 invisible" css={copyStyle}>
+            <p className="font-semibold">テキストをコピーしました</p>
+          </div>
+        </div>
+        {imageURLs.length !== 0 && <h1 className="mt-16 text-xl font-bold">Upload images</h1>}
         {imageURLs && imageURLs.map((data: any, index: number) => (
           <div className="mt-10 relative" key={index}>
-            <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+            <dl className="space-y-10 md:space-y-0">
               <div className="absolute left-0 z-10">
                 <button type="button" onClick={() => removeImg(index)} className="bg-indigo-300 -mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2">
                   <span className="sr-only">Dismiss</span>
@@ -187,7 +278,7 @@ export default function Uploader({}) {
                   <p className="ml-52 text-lg leading-6 font-medium text-gray-900">{imageNames[index]}</p>
                 </dt>
                 <dd className="mt-2 ml-52 text-base text-gray-500">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.
+                  こちらの画像のテキストを抽出します。
                 </dd>
               </div>
             </dl>

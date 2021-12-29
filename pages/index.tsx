@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import Uploader from '../components/Uploader';
 import Contact from  '../components/Contact';
@@ -9,6 +9,8 @@ import { css, jsx } from '@emotion/react'
 import 'scroll-behavior-polyfill';
 import '../src/firebase';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import axios from 'axios';
+import jsonpAdapter from 'axios-jsonp';
 
 // 認証
 const init = (account: any, password: any) => {
@@ -27,9 +29,14 @@ const init = (account: any, password: any) => {
 init(process.env.MAIL_ACCOUNT, process.env.MAIL_PASSWORD);
 
 export default function Home() {
+  if (typeof window !== 'undefined') {
+
+  }
+
   return (
     <Layout title="" noindex={false} description="フリー素材サイトShizukuya.orgへようこそ。こちらのサイトの素材はライセンスフリーでご使用いただけます。ぜひご活用ください。">
       <Top />
+      {/* <img id="js-b" src='IMG_2961.jpeg' /> */}
       <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
         <Uploader />
         <Donation />

@@ -2,7 +2,8 @@ version: '3'
 
 services:
   docker-jupyter-lab:
-    container_name: docker-jupyter-lab
+    container_name: sz-bg-app-jupyter-lab
+    image: sz-bg-app-jupyter-lab
     build:
       context: .
       dockerfile: Dockerfile
