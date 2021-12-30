@@ -12,7 +12,7 @@ export default function disclaimer() {
           <div className={style.section__terms}>
             <ul className={style.section__termsList}>
               <li className={style.section__termsItem}>
-                shizukuya.org（以下、「当サイト」とします。）における免責事項は、下記の通りです。
+                extracttextfromimage.online（以下、「当サイト」とします。）における免責事項は、下記の通りです。
               </li>
               <li className={style.section__termsItem}>
                 <dl className={style.section__termsDataList}>
