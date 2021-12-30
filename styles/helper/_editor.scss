@@ -1,0 +1,22 @@
+/* ==========================================================================//
+//
+// [helper - editor] editor.jsのスタイリング
+//
+// ========================================================================== */
+
+h2.ce-header {
+  font-size: 2.4rem;
+  font-weight: bold;
+
+  @include display_pc {
+    font-size: 3.2rem;
+  }
+}
+
+.google-auto-placed {
+  margin-top: 16px;
+
+  @include display_pc {
+    margin-top: 24px;
+  }
+}

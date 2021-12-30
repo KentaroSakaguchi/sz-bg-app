@@ -1,0 +1,326 @@
+/* ==========================================================================//
+//
+// [element情報 - header]
+//
+// ========================================================================== */
+
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.header {
+  padding: 16px;
+  width: 100%;
+  border-bottom: 1px solid $border_color;
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: $main_color;
+  z-index: 2;
+
+  @include display_pc {
+    height: 64px;
+  }
+
+  &__logo {
+    width: 100%;
+    margin: auto auto auto -64px;
+  }
+
+  &__logoList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__logoItem {
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__logoLink {
+    display: inline-block;
+
+    &Logo {
+      max-width: 64px;
+      min-width: 64px;
+    }
+  }
+
+  &__logoLogo {
+    width: 100%;
+  }
+
+  &__menu {
+    position: relative;
+    padding-left: 24px;
+    line-height: 1;
+
+    &::after,
+    &::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 2px;
+      border-radius: 2px;
+      background-color: $color_black;
+      position: absolute;
+      left: 0;
+      top: 4px;
+      transition: $transition_base;
+    }
+
+    &::after {
+      top: auto;
+      bottom: 2px;
+    }
+
+    &:hover {
+      &::after,
+      &::before {
+        background-color: $side_color;
+        left: 2px;
+      }
+
+      .header__menuText {
+        color: $side_color;
+
+        &::before {
+          background-color: $side_color;
+          left: -2px;
+        }
+      }
+    }
+  }
+
+  &__menuText {
+    transition: $transition_base;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 2px;
+      border-radius: 2px;
+      background-color: $color_black;
+      position: absolute;
+      left: 0;
+      top: 8px;
+      transition: $transition_base;
+    }
+  }
+
+  &__navWrapper {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: $main_color;
+    animation-name: slide_up;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-in-out;
+    animation-delay: 0;
+
+    @include display_pc {
+      width: 320px;
+    }
+  }
+
+  &__navBackDrop {
+    @include display_pc {
+      content: '';
+      display: block;
+      width: calc(100vw - 320px);
+      height: 100vh;
+      position: absolute;
+      left: 320px;
+      top: 0;
+      background-color: rgba($color_black, 0.8);
+    }
+  }
+
+  &__navItem {
+    border-top: 1px solid $border_color;
+
+    &:last-child {
+      border-bottom: 1px solid $border_color;
+    }
+
+    .header__navLink {
+      animation-name: text_up;
+      animation-duration: 0.4s;
+      animation-timing-function: ease-in-out;
+    }
+
+    &:nth-child(1) {
+      .header__navLink {
+        animation-duration: 0.4s;
+      }
+    }
+
+    &:nth-child(2) {
+      .header__navLink {
+        animation-duration: 0.5s;
+      }
+    }
+
+    &:nth-child(3) {
+      .header__navLink {
+        animation-duration: 0.6s;
+      }
+    }
+
+    &:nth-child(4) {
+      .header__navLink {
+        animation-duration: 0.7s;
+      }
+    }
+
+    &:nth-child(5) {
+      .header__navLink {
+        animation-duration: 0.8s;
+      }
+    }
+
+    &:nth-child(6) {
+      .header__navLink {
+        animation-duration: 0.9s;
+      }
+    }
+
+    &:nth-child(7) {
+      .header__navLink {
+        animation-duration: 1s;
+      }
+    }
+  }
+
+  &__navLink {
+    padding: 24px;
+    font-weight: bold;
+    display: block;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-color: $side_color;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: .2 ;
+      transition: $transition_middle;
+      transform: translateX(-100%);
+    }
+
+    &:hover {
+      &::before {
+        transform: translateX(0);
+      }
+
+      .header__navLinkSubText {
+        &::after {
+          transform: translateX(16px);
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__navLinkSubText {
+    font-size: 1.2rem;
+    font-weight: normal;
+    margin-left: 16px;
+    margin-top: 8px;
+    padding-right: 16px;
+    position: relative;
+    display: block;
+
+    &::after {
+      content: '';
+      width: 100%;
+      height: 1px;
+      background-color: $side_color;
+      position: absolute;
+      top: 6px;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: $transition_middle;
+    }
+  }
+
+  &__navList {
+    @include display_sp {
+      overflow-y: auto;
+      height: calc(100vh - 64px);
+    }
+  }
+
+  &__navButton {
+    padding: 24px 24px 24px 48px;
+    width: 100%;
+    position: relative;
+    transition: $transition_base;
+
+    &::after,
+    &::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 2px;
+      border-radius: 2px;
+      background-color: $color_black;
+      position: absolute;
+      left: 24px;
+      top: 32px;
+      transform: rotate(45deg);
+      transition: $transition_base;
+    }
+
+    &::after {
+      transform: rotate(-45deg)
+    }
+
+    &:hover {
+      color: $side_color;
+
+      &::after,
+      &::before {
+        transform: rotate(0);
+        background-color: $side_color;
+      }
+    }
+
+    @include display_sp {
+      height: 64px;
+    }
+  }
+}
+
+@keyframes slide_up {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes text_up {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+

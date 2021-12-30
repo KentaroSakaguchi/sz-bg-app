@@ -1,0 +1,57 @@
+/* ==========================================================================//
+//
+// [パーツ情報 - デフォルトのスタイル]
+//
+// ========================================================================== */
+html {
+  font-size: 62.5%;
+}
+
+body {
+  -webkit-overflow-scrolling: touch;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: $font_style_basic;
+  letter-spacing: 0.05rem;
+  font-size: 1.6rem;
+  background-color: $main_color;
+  color: $color_black;
+  overscroll-behavior-y: none;
+
+  // @include display_dark {
+  //   background-color: $dark_bg;
+  // }
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+ul, dl, dt, dd {
+  padding: 0;
+  margin: 0;
+}
+
+ul, li {
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+*:not(hr):not(legend) {
+  box-sizing: border-box;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+}

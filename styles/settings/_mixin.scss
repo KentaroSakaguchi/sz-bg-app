@@ -1,0 +1,39 @@
+/* ==========================================================================//
+//
+// [パーツ情報 - mixin]
+//
+// ========================================================================== */
+
+/* sp表示用 メディアクエリ(max-width: 768px) */
+@mixin display_sp {
+  @media(max-width: $dev_sp) {
+    @content;
+  }
+}
+
+/* pc表示用 メディアクエリ (min-width: 769px)*/
+@mixin display_pc {
+  @media(min-width: $dev_pc) {
+    @content;
+  }
+}
+
+/* TB表示用 メディアクエリ (min-width: 526px) and (max-width: 769px) */
+@mixin display_tb {
+  @media(min-width: 512px) and (max-width: 1024px) {
+    @content;
+  }
+}
+
+/* テキスト非表示 */
+@mixin hide_text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-indent: 120%;
+}
+
+@mixin display_dark {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}

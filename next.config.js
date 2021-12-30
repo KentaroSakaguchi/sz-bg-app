@@ -24,5 +24,9 @@ module.exports = {
   extends: [
   ],
 
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
+  },
+
   trailingSlash: true // index.htmlの作成
 };

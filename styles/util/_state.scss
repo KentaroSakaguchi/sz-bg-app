@@ -1,0 +1,54 @@
+/* ==========================================================================//
+//
+// [helper - editor] state 状態変化
+//
+// ========================================================================== */
+
+.state-code {
+  .loader-wrapper {
+    display: none;
+  }
+
+  .loader-code-wrapper,
+  .loader-code {
+    display: block;
+    width: 100%;
+  }
+}
+
+.loader-code {
+  display: none;
+  text-align: left;
+}
+
+.loader-code-wrapper {
+  display: none;
+  position: relative;
+
+  & + & {
+    margin-top: 16px;
+  }
+
+  &__text {
+    color: $color_white;
+    background-color: $side_color;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1.4rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px;
+    width: 100%;
+  }
+}
+
+.hljs {
+  padding: 48px 24px;
+}
+
+#trigger-none {
+  .trigger-y {
+    transform: translateX(0);
+  }
+}

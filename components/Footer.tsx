@@ -2,11 +2,12 @@ export default function Footer({}) {
   return (
     <footer className="p-10 footer bg-base-200 text-base-content footer-center">
     <div className="grid grid-flow-col gap-4">
+      <a className="link link-hover" href="/">Top</a>
       <a className="link link-hover" href="/terms-of-service/">利用規約</a>
       <a className="link link-hover" href="/privacy-policy/">プライバシーポリシー</a>
       <a className="link link-hover" href="/disclaimer/">免責事項</a>
     </div>
-    <div>
+    {/* <div>
       <div className="grid grid-flow-col gap-4">
         <a>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current">
@@ -24,7 +25,7 @@ export default function Footer({}) {
           </svg>
         </a>
       </div>
-    </div>
+    </div> */}
     <div>
       <p>&copy; 2021 株式会社静紅屋 Shizukuya inc.</p>
     </div>

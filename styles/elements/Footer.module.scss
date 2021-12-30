@@ -1,0 +1,38 @@
+/* ==========================================================================//
+//
+// [element情報 - footer]
+//
+// ========================================================================== */
+
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.footer {
+  padding: 48px;
+  background-color: $main_color;
+  border-top: 1px solid $border_color;
+
+  &__text {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 16px;
+  }
+
+  &__nav {
+    &Inner {
+      font-size: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    &Link {
+      margin-right: 16px;
+      margin-top: 8px;
+      white-space: nowrap;
+      display: inline-block;
+    }
+  }
+}
+

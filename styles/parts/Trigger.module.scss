@@ -1,0 +1,14 @@
+/* ==========================================================================//
+//
+// [parts情報 - triiger]
+//
+// ========================================================================== */
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.trigger {
+  width: 100%;
+  margin: auto;
+  transform: translateY(100px);
+}

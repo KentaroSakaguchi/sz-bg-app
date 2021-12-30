@@ -1,0 +1,19 @@
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.main {
+  min-height: calc(100vh - 64px);
+  margin: auto;
+  word-break: break-all;
+  position: relative;
+
+  // &::before {
+  //   content: '';
+  //   width: 100%;
+  //   height: 100vh;
+  //   position: absolute;
+  //   left: 0;
+  //   right: 0
+  // }
+}

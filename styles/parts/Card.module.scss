@@ -1,0 +1,98 @@
+/* ==========================================================================//
+//
+// [parts情報 - card]
+//
+// ========================================================================== */
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.card {
+  width: 100%;
+
+  & + & {
+    margin-top: 24px;
+  }
+
+  &Bottom {
+    margin-top: 24px;
+
+    @include display_pc {
+      width: calc((100% - 96px)/ 4);
+      margin-right: 24px;
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    width: 100%;
+  }
+
+  &__imgBox {
+    width: 100%;
+    background-color: $color_right_green;
+  }
+
+  &__img {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 100%;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 16px;
+  }
+
+  &__text {
+    font-size: 1.6rem;
+    margin-top: 16px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  &__timeBox {
+    font-size: 1.2rem;
+    margin-top: 16px;
+  }
+
+  &__genreText {
+    font-size: 1.2rem;
+    margin-top: 16px;
+    margin-right: 8px;
+  }
+
+  &__genreLink {
+    border-bottom: 1px solid currentColor;
+  }
+
+  &List {
+    & + & {
+      margin-top: 16px;
+    }
+
+    .card__link {
+      display: flex;
+    }
+
+    .card__imgBox {
+      width: 30%;
+    }
+
+    .card__img {
+      padding-bottom: 0;
+    }
+
+    .card__textBox {
+      width: 70%;
+      padding-left: 16px;
+    }
+  }
+}

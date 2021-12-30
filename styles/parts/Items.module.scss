@@ -1,0 +1,209 @@
+/* ==========================================================================//
+//
+// [parts情報 - items]
+//
+// ========================================================================== */
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.items {
+  width: 100%;
+  background-color: $main_color;
+
+  &__inner {
+    padding: 16px;
+    max-width: $content_max_width;
+    margin: auto;
+
+    @include display_pc {
+      padding: 48px;
+    }
+  }
+
+  &__box {
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  &__card {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    background-color: $color_white;
+    border: 1px solid $side_color;
+    position: relative;
+
+    @include display_dark {
+      background-color: $dark_mode_1;
+    }
+
+    &Under {
+      min-height: auto;
+    }
+
+    & + & {
+      margin-top: 16px;
+    }
+  }
+
+  &__cardUnder {
+    width: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    background-color: $color_white;
+    border: 1px solid $side_color;
+    position: relative;
+    margin-top: 16px;
+
+    @include display_dark {
+      background-color: $dark_mode_1;
+    }
+  }
+
+  &__cardBox {
+    width: 100%;
+    flex-direction: column;
+    background-color: $color_white;
+
+    @include display_dark {
+      background-color: $dark_mode_1;
+    }
+
+    & + & {
+      margin-top: 16px;
+    }
+  }
+
+  &__infoText {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px;
+    background-color: $side_color;
+    color: $color_white;
+    font-weight: bold;
+    font-size: 1.4rem;
+    width: 100%;
+  }
+
+  &__cardIcon {
+    transform-origin: center;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    &Right {
+      transform: scale(1);
+    }
+  }
+
+  &__titleWrapper {
+    @include display_pc {
+      display: flex;
+    }
+  }
+
+  &__titleButton {
+    margin-left: auto;
+    position: relative;
+    padding: 0 24px 24px 48px;
+    position: relative;
+    transition: $transition_base;
+    display: block;
+    z-index: 3;
+
+    &::after,
+    &::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 2px;
+      border-radius: 2px;
+      background-color: $color_black;
+      position: absolute;
+      left: 24px;
+      top: 8px;
+      transform: rotate(45deg);
+      transition: $transition_base;
+    }
+
+    &::after {
+      transform: rotate(-45deg)
+    }
+
+    &:hover {
+      color: $side_color;
+
+      &::after,
+      &::before {
+        transform: rotate(0);
+        background-color: $side_color;
+      }
+    }
+
+    @include display_sp {
+      float: right;
+      margin-top: 16px;
+      padding-right: 0;
+    }
+  }
+
+  &__html {
+    display: none;
+  }
+
+  &__pre {
+    width: 100%;
+  }
+
+  &__code {
+    white-space: pre-wrap;
+  }
+
+  &__codeWrapper {
+    .loader-wrapper {
+      display: none;
+    }
+  }
+
+  &__popup {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) translateX(-100%);
+    background-color: rgba($main_color, .7);
+  }
+
+  &__popupInner {
+    padding: 16px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__popupText {
+    font-size: 2rem;
+    font-weight: bold;
+    color: $color_white;
+  }
+
+  &__videoBox {
+    width: 100%;
+    min-height: 315px;
+  }
+
+  &__videoItem {
+    margin-top: 8px;
+  }
+}
+

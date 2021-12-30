@@ -1,0 +1,77 @@
+/* ==========================================================================//
+//
+// [parts情報 - loader]
+//
+// ========================================================================== */
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.loader {
+  &One {
+    width: 28px;
+    height: 28px;
+    font-size: 0;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    transition: all .3s ease-in-out
+  }
+
+  &__block {
+    width: 4px;
+    height: 0;
+    background-color: $side_color;
+    display: inline-block;
+    animation-name: slide_up;
+    animation-duration: 1.2s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-delay: 0s;
+    opacity: .4;
+
+    & + & {
+      margin-left: 4px;
+    }
+
+    &:nth-child(2) {
+      animation-delay: .3s
+    }
+
+    &:nth-child(3) {
+      -webkit-animation-delay: .6s;
+      animation-delay: .6s
+    }
+
+    &:nth-child(4) {
+      animation-delay: .9s
+    }
+  }
+}
+
+@keyframes slide_up {
+  0% {
+    opacity: .4;
+    height: 50%
+  }
+
+  25% {
+    opacity: .4;
+    height: 50%
+  }
+
+  50% {
+    opacity: .8;
+    height: 100%
+  }
+
+  75% {
+    opacity: .4;
+    height: 50%
+  }
+
+  to {
+    opacity: .4;
+    height: 50%
+  }
+}

@@ -1,0 +1,232 @@
+/* ==========================================================================//
+//
+// [element情報 - News]
+//
+// ========================================================================== */
+
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.block {
+  width: 100%;
+  max-width: $content_max_width;
+  padding: 48px 16px;
+  margin: auto;
+  border-top: 1px solid $border_color;
+  overflow: hidden;
+
+  &:first-child {
+    border: none;
+  }
+
+  @include display_pc {
+    padding: 48px 32px;
+  }
+
+  @include display_sp {
+    overflow: hidden;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  &__titleSub {
+    font-size: 1.6rem;
+    margin-top: 16px;
+  }
+
+  &__text {
+    font-size: 1.4rem;
+
+    & + & {
+      margin-top: 16px;
+    }
+  }
+
+  &__section {
+    display: grid;
+    grid-template-columns: 100%;
+    margin-top: 24px;
+    row-gap: 32px;
+    column-gap: 32px;
+
+    @include display_pc {
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(30%, 1fr)
+      );
+    }
+  }
+
+  &__sectionBlockCenter {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &Middle {
+      max-width: 480px;
+      margin: auto;
+    }
+  }
+
+  &__card {
+    border: 1px solid $side_color;
+    background-color: $color_white;
+
+    @include display_dark {
+      background-color: $dark_mode_1;
+    }
+  }
+
+  &__cardLink {
+    display: block;
+    position: relative;
+  }
+
+  &__cardImageBlock {
+    overflow: hidden;
+  }
+
+  &__cardImageBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+
+    &Tall {
+      min-height: 360px;
+    }
+  }
+
+  &__cardImage {
+    width: 100%;
+    transition: $transition_base;
+    object-fit: contain;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &__cardTextBlock {
+    padding: 16px;
+
+    &Over {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      background-color: rgba($color_white, 0.7);
+    }
+
+    @include display_dark {
+      color: $color_white;
+    }
+  }
+
+  &__cardTextTime {
+    font-size: 1.2rem;
+  }
+
+  &__cardTextTitle {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 16px;
+  }
+
+  &__cardText {
+    font-size: 1.4rem;
+    margin-top: 16px;
+  }
+
+  &__table {
+    width: 100%;
+    table-layout: fixed;
+    margin: 24px auto 0;
+    border-collapse: collapse;
+    font-size: 1.4rem;
+
+    @include display_pc {
+      width: calc(100% - 32px);
+    }
+  }
+
+  &__tableTd {
+    text-align: center;
+    border-left: 1px solid rgba($color_black, 0.3);
+    text-align: left;
+    width: 70%;
+
+    &__tableItem {
+      margin: 0;
+      padding: 0;
+    }
+
+    &__tableList {
+      list-style-type: none;
+    }
+  }
+
+  &__tableTh,
+  &__tableTd {
+    padding: 16px;
+  }
+
+  &__tableTh {
+    width: 30%;
+    font-weight: normal;
+    text-align: right;
+    vertical-align: top;
+  }
+
+  &__companyTitle {
+    margin-top: 24px;
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  &__profile {
+    margin-top: 32px;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__profileImage {
+    width: 100%;
+    object-fit: cover;
+  }
+
+  &__profileName {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-top: 16px;
+  }
+
+  &__profileTitle {
+    font-size: 1.4rem;
+    margin-top: 16px;
+  }
+
+  &__profileText {
+    font-size: 1.4rem;
+    margin-top: 16px;
+    line-height: 1.6;
+  }
+
+  &__time {
+    font-size: 1.4rem;
+    margin-top: 16px;
+    display: block;
+    text-align: right;
+  }
+}
+

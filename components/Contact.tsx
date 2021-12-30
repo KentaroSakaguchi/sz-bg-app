@@ -41,7 +41,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="mt-24">
+    <section className="mt-24" id="contact">
       <h1 className="text-xl font-bold">Contact</h1>
       <div className="mt-4">
         <p className="font-medium text-gray-900 truncate">弊社へのお問い合わせは 下記フォームにご記入の上 送信ください。</p>

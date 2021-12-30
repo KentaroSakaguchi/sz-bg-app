@@ -1,0 +1,25 @@
+/* ==========================================================================//
+//
+// [パーツ情報 - 変数]
+//
+// ========================================================================== */
+
+/* フォントファミリー */
+$font_style_basic: Roboto, Arial, sans-serif;
+$font_style_minchou: 'Yu Mincho', 'YuMincho', serif;
+
+/* break point */
+$dev_sp: 768px;
+$dev_pc: 769px;
+
+/* z-index */
+$z-index_header: 10;
+$z-index_header_nav-list: 11;
+
+/* transition */
+$transition_base: all 0.12s ease-out 0s;
+$transition_middle: all 0.3s ease-out 0s;
+$transition_slow: all .5s ease;
+
+
+$content_max_width: 1008px;

@@ -1,0 +1,32 @@
+/* ==========================================================================//
+//
+// [layout情報 - Layout]
+//
+// ========================================================================== */
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.layout {
+  @include display_pc {
+    display: flex;
+  }
+
+  &__columnPcHalf {
+    @include display_pc {
+      width: 50%;
+      margin-right: 32px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__columnSpWide {
+    @include display_sp {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+}

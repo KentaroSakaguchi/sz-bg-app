@@ -1,0 +1,64 @@
+/* ==========================================================================//
+//
+// [parts情報 - Button]
+//
+// ========================================================================== */
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.button {
+  &__block {
+    width: 100%;
+    margin-top: 32px;
+  }
+
+  &__blockOuter {
+    width: 100%;
+    margin-top: 8px;
+    margin-bottom: 32px;
+
+    @include display_pc {
+      margin-top: -16px;
+    }
+  }
+
+  &__buttonWrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__button {
+    color: $color_white;
+    font-weight: bold;
+    background-color: $side_color;
+    border: 1px solid $side_color;
+    padding: 16px 24px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      background-color: $color_white;
+      display: block;
+      width: calc(100% + 2px);
+      height: 100%;
+      position: absolute;
+      left: -1px;
+      top: 0;
+      bottom: 0%;
+      right: 0;
+      margin: auto;
+      opacity: .6;
+      transition: $transition_middle;
+      transform: translateX(-100%);
+    }
+
+    &:hover {
+      &::after {
+        transform: translateX(0);
+      }
+    }
+  }
+}

@@ -1,0 +1,94 @@
+/* ==========================================================================//
+//
+// [element情報 - Top]
+//
+// ========================================================================== */
+
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.top {
+  width: 100%;
+  height:  100vh;
+  position: relative;
+
+  @include display_sp {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  &__inner {
+    max-width: $content_max_width;
+    margin: auto;
+    padding: 48px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @include display_sp {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  &__title {
+    font-size: 3.2rem;
+    font-weight: bold;
+
+    @include display_pc {
+      font-size: 6rem;
+    }
+  }
+
+  &__titleSub {
+    margin-top: 32px;
+    font-size: 2rem;
+    font-weight: bold;
+    transform: translateX(100px);
+
+    @include display_pc {
+      font-size: 3.2rem;
+    }
+  }
+
+  &__titleText {
+    display: block;
+    transform: translateX(-100px);
+
+    &:nth-child(even) {
+      transform: translateX(100px);
+    }
+  }
+
+  &__backGround {
+    display: block;
+    width: 20%;
+    height: 100%;
+    border-style: solid;
+    border-width: 0 calc((100vw - 64px) / 2) 64vh calc((100vw - 64px) / 2);
+    border-color: transparent transparent $color_mint transparent;
+    position: absolute;
+    left: 64px;
+    bottom: 0;
+    z-index: -1;
+
+    @include display_pc {
+      border-width: 0 calc((100vw - 64px) / 5) 64vh calc((100vw - 64px) / 5);
+    }
+
+    & + & {
+      border-width: 64vh calc((100vw - 64px) / 2) 0 calc((100vw - 64px) / 2);
+      border-color: $color_pink transparent transparent transparent;
+      right: 64px;
+      left: auto;
+
+      @include display_pc {
+        border-width: 64vh calc((100vw - 64px) / 5) 0 calc((100vw - 64px) / 5);
+      }
+    }
+  }
+}
+

@@ -1,0 +1,251 @@
+/* ==========================================================================//
+//
+// [element情報 - section]
+//
+// ========================================================================== */
+@import '../settings/_colors.scss';
+@import '../settings/_variables.scss';
+@import '../settings/_mixin.scss';
+
+.section {
+  width: 100%;
+
+  &__inner {
+    width: 100%;
+    max-width: 976px;
+    margin: auto;
+    padding: 16px 0;
+
+    @include display_pc {
+      padding: 48px 16px;
+    }
+
+    &Page {
+      @include display_pc {
+        max-width: 680 + 32px;
+      }
+    }
+  }
+
+  &__text {
+    margin-top: 16px;
+    line-height: 32px;
+  }
+
+  &__textLink {
+    border-bottom: 1px solid currentColor;
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  &__textBlock {
+    &:last-child {
+      margin-bottom: 48px;
+    }
+
+    &Center {
+      text-align: center;
+
+      &:last-child {
+        margin-bottom: 48px;
+      }
+    }
+  }
+
+  &__textTitle {
+    font-size: 2rem;
+  }
+
+  &__company {
+    width: 100%;
+    color: #292525;
+    border: 1px solid rgba(#292525, 0.3);
+    table-layout: fixed;
+    margin: 24px auto 0;
+    border-collapse: collapse;
+    font-size: 1.6rem;
+    margin-bottom: 48px;
+
+    @include display_sp {
+      width: 100%;
+    }
+
+    &Td {
+      border-left: 1px solid rgba(#292525, 0.3);
+      text-align: left;
+      width: 70%;
+    }
+
+    &Th,
+    &Td {
+      padding: 8px;
+      border-bottom: 1px solid rgba(#292525, 0.3);
+    }
+
+    &Th {
+      background-color: $main_color;
+      width: 30%;
+      font-weight: bold;
+    }
+
+    &Item {
+      margin: 0;
+      padding: 0;
+    }
+
+    &List {
+      list-style-type: none;
+    }
+  }
+
+  &__logo {
+    background-color: $color_white;
+    display: flex;
+    align-items: center;
+    width: 176px;
+    height: 176px;
+    margin: 32px auto;
+    border: 1px solid $main_color;
+
+    &Img {
+      width: 100%;
+      margin: auto;
+      padding: 32px;
+    }
+  }
+
+  &__terms {
+    margin-top: 32px;
+    word-break: break-all;
+
+    &Title {
+      font-weight: bold;
+    }
+
+    &List {
+      margin-top: 16px;
+    }
+
+    &Item {
+      line-height: 32px;
+
+      & + & {
+        margin-top: 24px;
+      }
+    }
+
+    &Text {
+      margin-top: 24px;
+    }
+
+    &DataData {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    &DataListList {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 24px;
+      padding-left: 0;
+    }
+
+    &DataListItem {
+      margin-top: 8px;
+    }
+
+    &DataListChildList {
+      margin-top: 8px;
+      padding-left: 0;
+    }
+
+    &DataListChildItem {
+      margin-top: 4px;
+      padding-left: 16px;
+    }
+
+    &ItemText {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+  }
+
+  &__contentImgBoxWrapper {
+    width: 100%;
+    margin-top: 16px;
+
+    &Half {
+      width: 50%;
+      margin: auto;
+    }
+  }
+
+  &__contentImg {
+    width: 100%;
+    display: block;
+  }
+
+  &__infoWrapper {
+    margin-top: 0;
+  }
+
+  &__infoText {
+    display: inline-block;
+    vertical-align: middle;
+    color: $color_gray;
+  }
+
+  &__comandText {
+    background-color: $color_light_gray;
+    padding: 16px;
+    display: block;
+    overflow-x: auto;
+    white-space: pre-wrap;
+  }
+
+  &__textImgWrapper {
+    width: 100%;
+  }
+
+  &__textImg {
+    width: 100%;
+  }
+
+  &__input {
+    width: 100%;
+    max-width: 384px;
+    display: block;
+    border: 1px solid $color_gray;
+    padding: 16px;
+    border-radius: 4px;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__submitButton {
+    background-color: $main_color;
+    color: $color_white;
+    padding: 16px;
+    border-radius: 4px;
+    display: block;
+    margin-top: 16px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__contentWrapper {
+    margin-top: 32px;
+  }
+
+  &__cardWrapper {
+    @include display_pc {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}

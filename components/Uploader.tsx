@@ -121,7 +121,7 @@ export default function Uploader({}) {
         method: 'POST',
         body
       }).then(() => {
-        console.log(location.href + data.name)
+        // console.log(location.href + data.name)
         // extractText(`${location.href}/output.jpg`);
       });
 
@@ -150,7 +150,7 @@ export default function Uploader({}) {
   const upload = (event) => {
     imageCounter(imageCounterValue + 1);
     setCreateObjectURLs([...imageURLs, URL.createObjectURL(event.target.files[0])]);
-    uploadToServer(event.target.files[0], event.target.files[0].name);
+    uploadToServer(event.target.files[0], URL.createObjectURL(event.target.files[0]));
     setCreateObjectNames([...imageNames]);
   };
 
@@ -288,6 +288,7 @@ export default function Uploader({}) {
           {rexultText &&
             <div>
               <h1 className="mt-16 text-xl font-bold">Results / 出力結果</h1>
+              <p className="mt-4">コピーボタンは下部にあります</p>
               <div className="mt-8 bg-indigo-600 rounded-xl py-3 px-3">
                 <p className="whitespace-pre-wrap mt-2 text-lg text-white">{rexultText}</p>
               </div>
@@ -304,8 +305,8 @@ export default function Uploader({}) {
             <p className="font-semibold">テキストをコピーしました</p>
           </div>
         </div>
-        {imageURLs.length !== 0 && <h1 className="mt-16 text-xl font-bold">Upload images</h1>}
-        {imageURLs && imageURLs.map((data: any, index: number) => (
+        {/* {imageURLs.length !== 0 && <h1 className="mt-16 text-xl font-bold">Upload images</h1>} */}
+        {/* {imageURLs && imageURLs.map((data: any, index: number) => (
           <div className="mt-10 relative" key={index}>
             <dl className="space-y-10 md:space-y-0">
               <div className="absolute left-0 z-10">
@@ -329,7 +330,7 @@ export default function Uploader({}) {
               </div>
             </dl>
           </div>
-        ))}
+        ))} */}
       </div>
     </section>
   );
