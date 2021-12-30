@@ -24,7 +24,7 @@ export default function Uploader({}) {
   const [log, setLog] = useState({status: '', progress: 0});
 
   const uploadToServer = async (data, url) => {
-    console.log(data);
+
     if (data.type !== fileTypeJpeg && data.type !== fileTypePng) {
       setErrorText(imgTypeErrorText);
       setCreateObjectURLs([]);
@@ -67,7 +67,6 @@ export default function Uploader({}) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
-      console.log(url)
       img.src = url;
 
       img.addEventListener('load', async () => {
