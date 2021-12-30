@@ -6,7 +6,7 @@ export default function Layout({children, title = '画像(JPG、PNG）の文字�
   return (
     <div>
       <Head>
-        { title ? <title>{title + ' | extracttextfromimage.online'}</title> : <title>画像からテキスト抽出オンラインツール</title> }
+        { title ? <title>{title + ' | extracttextfromimage.online'}</title> : <title>画像からテキスト抽出オンラインツール | extracttextfromimage.online</title> }
         <link rel="icon" type="image/png" href="https://extracttextfromimage.online/logo-min.png" sizes="114x114" />
         <meta name="description" content={description} />
         <meta name="twitter:title" content={title ? title + ' | extracttextfromimage.online Shizukuya' : '画像(JPG、PNG）の文字認識を行い、オンランでテキストに変換します。 無料でご利用いただけます。'} />

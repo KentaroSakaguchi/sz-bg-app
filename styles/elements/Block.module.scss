@@ -15,6 +15,7 @@
   margin: auto;
   border-top: 1px solid $border_color;
   overflow: hidden;
+  min-height: 80vh;
 
   &:first-child {
     border: none;
@@ -148,7 +149,7 @@
     table-layout: fixed;
     margin: 24px auto 0;
     border-collapse: collapse;
-    font-size: 1.4rem;
+    font-size: 14px;
 
     @include display_pc {
       width: calc(100% - 32px);

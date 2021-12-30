@@ -1,11 +1,12 @@
 export default function Footer({}) {
   return (
     <footer className="p-10 footer bg-base-200 text-base-content footer-center">
-    <div className="grid grid-flow-col gap-4">
+    <div className="md:grid md:grid-flow-col md:gap-4">
       <a className="link link-hover" href="/">Top</a>
       <a className="link link-hover" href="/terms-of-service/">利用規約</a>
       <a className="link link-hover" href="/privacy-policy/">プライバシーポリシー</a>
       <a className="link link-hover" href="/disclaimer/">免責事項</a>
+      <a className="link link-hover" href="/company/">運営会社</a>
     </div>
     {/* <div>
       <div className="grid grid-flow-col gap-4">

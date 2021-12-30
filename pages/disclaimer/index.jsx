@@ -5,7 +5,7 @@ import style from '../../styles/elements/Section.module.scss';
 
 export default function disclaimer() {
   return (
-    <Layout title="免責事項" noindex={true} description="">
+    <Layout title="免責事項" noindex={true} description="免責事項のページです。">
       <div className={style.section}>
         <div className={style.section__inner}>
           <h1 className={style.section__title}>免責事項</h1>
