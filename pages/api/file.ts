@@ -1,5 +1,6 @@
-import formidable from "formidable";
-import fs from "fs";
+import formidable from 'formidable';
+import fs from 'fs';
+import sharp from 'sharp'
 
 export const config = {
   api: {
@@ -20,6 +21,12 @@ const saveFile = async (file) => {
   const data = fs.readFileSync(file.filepath);
   fs.writeFileSync(`./public/${file.originalFilename}`, data);
   await fs.unlinkSync(file.filepath);
+  sharp(`./public/${file.originalFilename}`)
+    .rotate()
+    .grayscale()
+    .toFile(`./public/output.jpg`, (err, info) => {
+
+    });
   return;
 };
 

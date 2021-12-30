@@ -23,7 +23,7 @@ export default function Uploader({}) {
   const [progressStyle, progressStyleChange] = useState(css`width: 0`);
   const [log, setLog] = useState({status: '', progress: 0});
 
-  const uploadToServer = async (data) => {
+  const uploadToServer = async (data, url) => {
     console.log(data);
     if (data.type !== fileTypeJpeg && data.type !== fileTypePng) {
       setErrorText(imgTypeErrorText);
@@ -63,6 +63,56 @@ export default function Uploader({}) {
       await worker.terminate();
     };
 
+    if (typeof window !== 'undefined') {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      console.log(url)
+      img.src = url;
+
+      img.addEventListener('load', async () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        // 画像の各ピクセルをグレースケールに変換する
+        const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        for (let y = 0; y < pixels.height; y++) {
+          for (let x = 0; x < pixels.width; x++) {
+            const i = (y * 4) * pixels.width + x * 4;
+            const parseValue: any = ((pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3)
+            const rgb = parseInt(parseValue, 10);
+            pixels.data[i] = rgb;
+            pixels.data[i + 1] = rgb;
+            pixels.data[i + 2] = rgb;
+          }
+        }
+
+        ctx.putImageData(pixels, 0, 0, 0, 0, pixels.width, pixels.height);
+
+        const base64toBlob = (base64) => {
+          const bin = atob(base64.replace(/^.*,/, ''));
+          const buffer = new Uint8Array(bin.length);
+
+          for (let i = 0; i < bin.length; i++) {
+            buffer[i] = bin.charCodeAt(i);
+          }
+
+          try {
+            const blob = new Blob([buffer.buffer], {
+              type: 'image/jpeg'
+            });
+            return blob;
+
+          } catch (e){
+            return false;
+          }
+        }
+
+        extractText(base64toBlob(canvas.toDataURL()))
+      });
+    }
+
     if (location.host === 'localhost:3000') {
       const body = new FormData();
       body.append('file', data);
@@ -72,7 +122,7 @@ export default function Uploader({}) {
         body
       }).then(() => {
         console.log(location.href + data.name)
-        extractText(location.href + data.name);
+        // extractText(`${location.href}/output.jpg`);
       });
 
     } else {
@@ -81,13 +131,12 @@ export default function Uploader({}) {
 
       uploadBytesResumable(imageRef, data, data)
         .then((snapshot) => {
-          console.log('Uploaded', snapshot.totalBytes, 'bytes.');
-          console.log('File metadata:', snapshot.metadata);
+          // console.log('Uploaded', snapshot.totalBytes, 'bytes.');
+          // console.log('File metadata:', snapshot.metadata);
           // Let's get a download URL for the file.
           getDownloadURL(snapshot.ref).then((url) => {
             console.log('File available at', url);
             addMessageFunctions(`画像up: ${url}`);
-            extractText(url);
           });
 
         }).catch((error) => {
@@ -96,16 +145,13 @@ export default function Uploader({}) {
         });
     }
 
-    // const grayImage = ChangeGrayscale(imageURLs[0])
-    // grayScaleImageNameSet(grayImage);
-    // console.log(grayScaleImageName);
   };
 
   const upload = (event) => {
     imageCounter(imageCounterValue + 1);
     setCreateObjectURLs([...imageURLs, URL.createObjectURL(event.target.files[0])]);
-    uploadToServer(event.target.files[0]);
-    setCreateObjectNames([...imageNames, event.target.files[0].name]);
+    uploadToServer(event.target.files[0], event.target.files[0].name);
+    setCreateObjectNames([...imageNames]);
   };
 
   const [dropStyle, dropStyleChange] = useState(null);
@@ -132,7 +178,7 @@ export default function Uploader({}) {
       imageCounter((data) => data + 1);
       setCreateObjectURLs((imageURLs) => [...imageURLs, URL.createObjectURL(value)]);
       setCreateObjectNames((imageNames) => [...imageNames, value.name]);
-      uploadToServer(value);
+      uploadToServer(value, URL.createObjectURL(value));
     });
   };
 

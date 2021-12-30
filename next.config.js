@@ -1,6 +1,14 @@
 const path = require('path');
 
 module.exports = {
+  webpack5: true,
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
+    return config;
+  },
+
   env: {
     FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
     FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
