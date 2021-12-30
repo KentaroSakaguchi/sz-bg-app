@@ -11,6 +11,7 @@ class MyApp extends Document {
           <Main />
           <NextScript />
         </body>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5081824799734894" crossOrigin="anonymous"></script>
       </Html>
     )
   }

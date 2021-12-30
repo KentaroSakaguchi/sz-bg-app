@@ -130,9 +130,9 @@ export default function Contact() {
                       <p className="text-sm text-gray-500">
                       お問い合わせ内容を確認し、必要のある場合はこちらから折り返し連絡いたします。よろしくお願いいたします。
                       </p>
-                      <p className="text-sm text-gray-500 mt-2">
+                      {/* <p className="text-sm text-gray-500 mt-2">
                       We will check the contents of your inquiry and will contact you if necessary. Thank you.
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </div>

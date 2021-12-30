@@ -192,6 +192,10 @@ export default function Uploader({}) {
   useEffect(() => {
     // console.log(log)
     progressStyleChange(css`width: ${log.progress * 100}%;`);
+    if (log.status === 'recognizing text' && log.progress * 100 === 100) {
+      location.href = `${location.origin}/#result`;
+    }
+
     camera ? StartCamera('open') : StartCamera('close');
   }, [setCreateObjectNames, setCreateObjectURLs, camera, log, progressStyleChange]);
 
@@ -283,7 +287,7 @@ export default function Uploader({}) {
             }
           </div>
         }
-        <div className="relative">
+        <div className="relative" id="result">
           {rexultText &&
             <div>
               <h1 className="mt-16 text-xl font-bold">Results / 出力結果</h1>
