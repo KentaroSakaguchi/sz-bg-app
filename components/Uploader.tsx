@@ -134,7 +134,7 @@ export default function Uploader({}) {
           // console.log('File metadata:', snapshot.metadata);
           // Let's get a download URL for the file.
           getDownloadURL(snapshot.ref).then((url) => {
-            console.log('File available at', url);
+            // console.log('File available at', url);
             addMessageFunctions(`画像up: ${url}`);
           });
 

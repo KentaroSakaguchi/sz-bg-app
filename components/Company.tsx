@@ -28,7 +28,7 @@ export default function Company() {
         </tr> */}
         <tr className={style.block__tableTr}>
           <th className={style.block__tableTh}>所在地</th>
-          <td className={style.block__tableTd}>〒107-0062 東京都 港区 南青山4-17-33 グランカーサ南青山2F</td>
+          <td className={style.block__tableTd}>〒107-0061 東京都港区 北青山2-7-13 プラセオ青山ビル3階 青山アラマンダワークコート</td>
         </tr>
         <tr className={style.block__tableTr}>
           <th className={style.block__tableTh}>所属団体</th>

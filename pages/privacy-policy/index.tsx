@@ -253,7 +253,7 @@ export default function privacyPolicy() {
                     社名: 株式会社静紅屋
                   </dt>
                   <dd className={style.section__termsDataData}>
-                    住所: 東京都港区南青山4-17-33 グランカーサ南青山2F
+                    住所: 東京都港区北青山2-7-13 プラセオ青山ビル3階 青山アラマンダワークコート
                   </dd>
                   <dd className={style.section__termsDataData}>
                     Eメールアドレス: info.shizukuya@gmail.com
