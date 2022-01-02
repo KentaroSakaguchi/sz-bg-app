@@ -3,6 +3,7 @@ import { css, jsx } from '@emotion/react';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import axios from 'axios';
+import Compressor from 'compressorjs';
 import { createWorker } from 'tesseract.js';
 import { StartCamera, CameraImageStyle, CameraButtonStyle, CameraCloseButtonStyle } from './UploaderModules/StartCamera';
 import { MakeText } from './UploaderModules/MakeText';
@@ -23,7 +24,7 @@ export default function Uploader({}) {
   const [progressStyle, progressStyleChange] = useState(css`width: 0`);
   const [log, setLog] = useState({status: '', progress: 0});
 
-  const uploadToServer = async (data, url) => {
+  const uploadToServer = async (data) => {
 
     if (data.type !== fileTypeJpeg && data.type !== fileTypePng) {
       setErrorText(imgTypeErrorText);
@@ -40,7 +41,6 @@ export default function Uploader({}) {
     }
 
     setErrorText(null);
-    // console.log(imageCounterValue)
 
     // extractText
     const worker = createWorker({
@@ -67,49 +67,58 @@ export default function Uploader({}) {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
-      img.src = url;
 
-      img.addEventListener('load', async () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
+      new Compressor(data, {
+        quality: 0.1,
 
-        // 画像の各ピクセルをグレースケールに変換する
-        const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        for (let y = 0; y < pixels.height; y++) {
-          for (let x = 0; x < pixels.width; x++) {
-            const i = (y * 4) * pixels.width + x * 4;
-            const parseValue: any = ((pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3)
-            const rgb = parseInt(parseValue, 10);
-            pixels.data[i] = rgb;
-            pixels.data[i + 1] = rgb;
-            pixels.data[i + 2] = rgb;
-          }
+        success(result) {
+          // console.log(result)
+          const resultFiles = result;
+          img.src = URL.createObjectURL(resultFiles);
+
+          img.addEventListener('load', async () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+
+            // 画像の各ピクセルをグレースケールに変換する
+            const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            for (let y = 0; y < pixels.height; y++) {
+              for (let x = 0; x < pixels.width; x++) {
+                const i = (y * 4) * pixels.width + x * 4;
+                const parseValue: any = ((pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3)
+                const rgb = parseInt(parseValue, 10);
+                pixels.data[i] = rgb;
+                pixels.data[i + 1] = rgb;
+                pixels.data[i + 2] = rgb;
+              }
+            }
+
+            ctx.putImageData(pixels, 0, 0, 0, 0, pixels.width, pixels.height);
+
+            const base64toBlob = (base64) => {
+              const bin = atob(base64.replace(/^.*,/, ''));
+              const buffer = new Uint8Array(bin.length);
+
+              for (let i = 0; i < bin.length; i++) {
+                buffer[i] = bin.charCodeAt(i);
+              }
+
+              try {
+                const blob = new Blob([buffer.buffer], {
+                  type: 'image/jpeg'
+                });
+                return blob;
+
+              } catch (e){
+                return false;
+              }
+            }
+
+            extractText(base64toBlob(canvas.toDataURL()))
+          });
         }
-
-        ctx.putImageData(pixels, 0, 0, 0, 0, pixels.width, pixels.height);
-
-        const base64toBlob = (base64) => {
-          const bin = atob(base64.replace(/^.*,/, ''));
-          const buffer = new Uint8Array(bin.length);
-
-          for (let i = 0; i < bin.length; i++) {
-            buffer[i] = bin.charCodeAt(i);
-          }
-
-          try {
-            const blob = new Blob([buffer.buffer], {
-              type: 'image/jpeg'
-            });
-            return blob;
-
-          } catch (e){
-            return false;
-          }
-        }
-
-        extractText(base64toBlob(canvas.toDataURL()))
-      });
+      })
     }
 
     if (location.host === 'localhost:3000') {
@@ -149,7 +158,7 @@ export default function Uploader({}) {
   const upload = (event) => {
     imageCounter(imageCounterValue + 1);
     setCreateObjectURLs([...imageURLs, URL.createObjectURL(event.target.files[0])]);
-    uploadToServer(event.target.files[0], URL.createObjectURL(event.target.files[0]));
+    uploadToServer(event.target.files[0]);
     setCreateObjectNames([...imageNames]);
   };
 
@@ -177,7 +186,7 @@ export default function Uploader({}) {
       imageCounter((data) => data + 1);
       setCreateObjectURLs((imageURLs) => [...imageURLs, URL.createObjectURL(value)]);
       setCreateObjectNames((imageNames) => [...imageNames, value.name]);
-      uploadToServer(value, URL.createObjectURL(value));
+      uploadToServer(value);
     });
   };
 

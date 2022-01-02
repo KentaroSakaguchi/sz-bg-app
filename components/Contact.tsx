@@ -94,9 +94,6 @@ export default function Contact() {
                 placeholder="メッセージ / Message"
               ></textarea>
             </div>
-            <p className="mt-2 text-sm text-gray-500">
-              Brief description for your profile. URLs are hyperlinked.
-            </p>
           </div>
           <div className="mt-8">
             <div className="flex justify-center items-center">

@@ -16,6 +16,7 @@
     "@tailwindcss/forms": "^0.3.4",
     "axios": "^0.24.0",
     "axios-jsonp": "^1.0.4",
+    "compressorjs": "^1.1.1",
     "daisyui": "^1.16.2",
     "firebase": "^9.6.0",
     "formidable": "^2.0.1",
