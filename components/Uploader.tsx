@@ -41,6 +41,7 @@ export default function Uploader({}) {
     }
 
     setErrorText(null);
+    setRexultText('');
 
     // extractText
     const worker = createWorker({
@@ -63,63 +64,16 @@ export default function Uploader({}) {
       await worker.terminate();
     };
 
-    if (typeof window !== 'undefined') {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
+    // 画像圧縮
+    new Compressor(data, {
+      quality: 0.1,
 
-      new Compressor(data, {
-        quality: 0.1,
-
-        success(result) {
-          // console.log(result)
-          const resultFiles = result;
-          img.src = URL.createObjectURL(resultFiles);
-
-          img.addEventListener('load', async () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-
-            // 画像の各ピクセルをグレースケールに変換する
-            const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            for (let y = 0; y < pixels.height; y++) {
-              for (let x = 0; x < pixels.width; x++) {
-                const i = (y * 4) * pixels.width + x * 4;
-                const parseValue: any = ((pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3)
-                const rgb = parseInt(parseValue, 10);
-                pixels.data[i] = rgb;
-                pixels.data[i + 1] = rgb;
-                pixels.data[i + 2] = rgb;
-              }
-            }
-
-            ctx.putImageData(pixels, 0, 0, 0, 0, pixels.width, pixels.height);
-
-            const base64toBlob = (base64) => {
-              const bin = atob(base64.replace(/^.*,/, ''));
-              const buffer = new Uint8Array(bin.length);
-
-              for (let i = 0; i < bin.length; i++) {
-                buffer[i] = bin.charCodeAt(i);
-              }
-
-              try {
-                const blob = new Blob([buffer.buffer], {
-                  type: 'image/jpeg'
-                });
-                return blob;
-
-              } catch (e){
-                return false;
-              }
-            }
-
-            extractText(base64toBlob(canvas.toDataURL()))
-          });
-        }
-      })
-    }
+      success(result) {
+        // console.log(result)
+        const resultFiles = result;
+        extractText(resultFiles)
+      }
+    })
 
     if (location.host === 'localhost:3000') {
       const body = new FormData();
@@ -201,12 +155,12 @@ export default function Uploader({}) {
   useEffect(() => {
     // console.log(log)
     progressStyleChange(css`width: ${log.progress * 100}%;`);
-    if (log.status === 'recognizing text' && log.progress * 100 === 100) {
+    if (log.status === 'recognizing text' && log.progress * 100 === 100 && rexultText) {
       location.href = `${location.origin}/#result`;
     }
 
     camera ? StartCamera('open') : StartCamera('close');
-  }, [setCreateObjectNames, setCreateObjectURLs, camera, log, progressStyleChange]);
+  }, [setCreateObjectNames, setCreateObjectURLs, camera, log, progressStyleChange, rexultText]);
 
   const [copyStyle, copyStyleChange] = useState(null);
 
@@ -226,6 +180,25 @@ export default function Uploader({}) {
   return (
     <section className="mt-16">
       <h1 className="text-xl font-bold" id="upload">Upload</h1>
+      {log.status &&
+        <div className="relative pt-1 mt-8 mb-8">
+          <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-indigo-200">
+            <div css={progressStyle} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500"></div>
+          </div>
+          {
+            log.status === 'recognizing text' && <div className="flex text-sm text-gray-600 justify-center items-center">
+              {log.progress !== 1 && <p className="text-xl font-bold">画像解析中: {Math.floor(log.progress * 100)}%</p>}
+              {log.progress === 1 && <p className="text-xl font-bold">画像解析が完了しました。</p>}
+            </div>
+          }
+          {
+            log.status !== 'recognizing text' && <div className="flex text-sm text-gray-600 justify-center items-center">
+              {log.status !==  'initialized api' && <p className="text-xl font-bold">画像読み取り中</p>}
+              {log.status ===  'initialized api' && <p className="text-xl font-bold">画像解析準備中</p>}
+            </div>
+          }
+        </div>
+      }
       <div>
         <div
           className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md transition-all"
@@ -279,23 +252,6 @@ export default function Uploader({}) {
             </div>
           } */}
         </div>
-        {log.status &&
-          <div className="relative pt-1 mt-16">
-            <div className="overflow-hidden h-2 mb-4 text-xs flex rounded bg-indigo-200">
-              <div css={progressStyle} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-indigo-500"></div>
-            </div>
-            {
-              log.status === 'recognizing text' && <div className="flex text-sm text-gray-600 justify-center items-center">
-                <p className="text-xl font-bold">画像解析中: {Math.floor(log.progress * 100)}%</p>
-              </div>
-            }
-            {
-              log.status !== 'recognizing text' && <div className="flex text-sm text-gray-600 justify-center items-center">
-                <p className="text-xl font-bold">画像読み取り中</p>
-              </div>
-            }
-          </div>
-        }
         <div className="relative" id="result">
           {rexultText &&
             <div>
@@ -313,7 +269,7 @@ export default function Uploader({}) {
               </div>
             </div>
           }
-          <div className="h-32 absolute inset-0 z-20 m-auto py-3 px-3 flex items-center justify-center bg-indigo-300 rounded-xl transition-all ease-in-out opacity-0 invisible" css={copyStyle}>
+          <div className="h-32 fixed inset-0 z-20 m-auto py-3 px-3 flex items-center justify-center bg-indigo-300 rounded-xl transition-all ease-in-out opacity-0 invisible" css={copyStyle}>
             <p className="font-semibold">テキストをコピーしました</p>
           </div>
         </div>
