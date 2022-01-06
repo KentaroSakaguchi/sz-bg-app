@@ -94,7 +94,7 @@ export default function Top({}) {
               <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                 <div className="rounded-md shadow">
                   <a href="#upload" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-                    早速、画像を変換する
+                    早速、画像からテキストを抽出する
                   </a>
                 </div>
                 {/* <div className="mt-3 sm:mt-0 sm:ml-3">
@@ -108,7 +108,7 @@ export default function Top({}) {
         </div>
       </div>
       <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <img className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="/text3.png" alt="" />
+        <img className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="/iStock-1186357899.jpg" alt="" />
       </div>
     </div>
 

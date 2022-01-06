@@ -5,10 +5,10 @@ import style from '../../styles/elements/Section.module.scss';
 
 export default function disclaimer() {
   return (
-    <Layout title="免責事項" noindex={true} description="免責事項のページです。">
+    <Layout title="免責事項" noindex={true} description='免責事項のページです。'>
       <div className={style.section}>
         <div className={style.section__inner}>
-          <h1 className={style.section__title}>免責事項</h1>
+          <h1 className="my-4 text-4xl font-bold card-title">免責事項</h1>
           <div className={style.section__terms}>
             <ul className={style.section__termsList}>
               <li className={style.section__termsItem}>
@@ -55,21 +55,11 @@ export default function disclaimer() {
                     当サイトに掲載された内容によって生じた損害等の一切の責任を負いかねますので、ご了承ください。
                   </dd>
                   <dd className={style.section__termsDataData}>
-                    当サイトでフリー素材として掲載している動画、画像、プログラムによって生じた損害等の一切の責任を負いかねますので、ご了承ください。
-                  </dd>
-                  <dd className={style.section__termsDataData}>
                     また当サイトからリンクやバナーなどによって他のサイトに移動された場合、移動先サイトで提供される情報、サービス等について一切の責任も負いません。
                   </dd>
                   <dd className={style.section__termsDataData}>
                     サイトを利用する場合は、自己責任で行う必要があります。
                   </dd>
-                  <dd className={style.section__termsDataData}>
-                    当サイトのコンテンツ（動画、画像、プログラム等）の利用に際し、いかなるトラブルが発生しても、当サイト及び制作者は、一切の責任を負いません。
-                  </dd>
-                  <dd className={style.section__termsDataData}>
-                    当サイトのコンテンツ（動画、画像、プログラム等）は予告なしに変更・削除されることがあります。また、当サイトは、都合により当サイトを閉鎖することができます。
-                  </dd>
-
                 </dl>
               </li>
               <li className={style.section__termsItem}>
@@ -78,13 +68,7 @@ export default function disclaimer() {
                     当サイトで掲載している画像の著作権や肖像権等について
                   </dt>
                   <dd className={style.section__termsDataData}>
-                    当サイトで掲載している画像、動画の著作権や肖像権等は、各権利所有者に帰属します。万が一問題がある場合は、お問い合わせよりご連絡いただけますよう宜しくお願い致します。
-                  </dd>
-                  <dd className={style.section__termsDataData}>
-                    当サイトでフリー素材として掲載している画像、動画の著作権については、個人、商用利用を問わずライセンスフリーとしてご利用いただけます。
-                  </dd>
-                  <dd className={style.section__termsDataData}>
-                    当サイトでフリー素材として掲載している画像、動画の肖像権等は、各権利所有者に帰属します。万が一問題がある場合は、お問い合わせよりご連絡いただけますよう宜しくお願い致します。
+                    当サイトで掲載している画像の著作権や肖像権等は、各権利所有者に帰属します。万が一問題がある場合は、お問い合わせよりご連絡いただけますよう宜しくお願い致します。
                   </dd>
                 </dl>
               </li>
@@ -95,9 +79,6 @@ export default function disclaimer() {
                   </dt>
                   <dd className={style.section__termsDataData}>
                     当サイトに存在する、文章や画像、動画等の著作物の情報を引用の範囲を超えて無断転載することを禁止します。
-                  </dd>
-                  <dd className={style.section__termsDataData}>
-                    当サイトでフリー素材として掲載している、文章や画像、動画等の著作物の情報は個人、商用利用を問わずライセンスフリーとしてご利用いただけます。
                   </dd>
                 </dl>
               </li>
