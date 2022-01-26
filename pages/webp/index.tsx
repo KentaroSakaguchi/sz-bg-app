@@ -34,12 +34,11 @@ export default function Home() {
   }
 
   return (
-    <Layout title="" noindex={false} description="画像(JPG、PNG）からWebPへのコンバーター。 画像(JPG、PNG）からWebPへの変換ツールです。ぜひご活用ください。" lp={true}>
+    <Layout title="画像からからWebPへのコンバーター" noindex={false} description="画像(JPG、PNG）からWebPへのコンバーター。 画像(JPG、PNG）からWebPへの変換ツールです。ぜひご活用ください。" lp={true}>
       <Webp />
       <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
         <Uploader />
         {/* <Donation /> */}
-        <Contact />
       </div>
     </Layout>
   )

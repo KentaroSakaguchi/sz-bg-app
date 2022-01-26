@@ -7,7 +7,6 @@ import Top from  '../components/Top';
 import Donation from '../components/Donation';
 import { css, jsx } from '@emotion/react'
 import 'scroll-behavior-polyfill';
-import '../src/firebase';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import axios from 'axios';
 import jsonpAdapter from 'axios-jsonp';
@@ -36,11 +35,9 @@ export default function Home() {
   return (
     <Layout title="" noindex={false} description="画像(JPG、PNG）の文字認識を行い、オンランでテキストに変換します。 無料でご利用いただけます。ぜひご活用ください。" lp={true}>
       <Top />
-      <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
+      {/* <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
         <Uploader />
-        {/* <Donation /> */}
-        <Contact />
-      </div>
+      </div> */}
     </Layout>
   )
 }

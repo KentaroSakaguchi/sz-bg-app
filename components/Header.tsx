@@ -11,6 +11,7 @@ export default function Header({}) {
 
   const HeaderStyle = css`
     padding-bottom: 16px;
+    z-index: 2;
 
     ${Mediaquery[0]} {
       width: 100%;
@@ -45,7 +46,7 @@ export default function Header({}) {
 
             <a href="/webp" className="font-medium text-gray-500 hover:text-gray-900">画像をWebPに変換</a>
 
-            <a href="/#contact" className="font-medium text-gray-500 hover:text-gray-900">Contact</a>
+            <a href="/contact" className="font-medium text-gray-500 hover:text-gray-900">Contact</a>
 
             <a href="/company" className="font-medium text-gray-500 hover:text-gray-900">Company</a>
 
@@ -75,7 +76,7 @@ export default function Header({}) {
             <div className="px-2 pt-2 pb-3 space-y-1">
               <a href="/extract" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">画像からテキスト抽出ツール</a>
               <a href="/webp" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">画像をWebPに変換</a>
-              <a href="/#contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
+              <a href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
 
               <a href="/company" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Company</a>
 

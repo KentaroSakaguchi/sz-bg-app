@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import isEmail from 'validator/lib/isEmail';
+import style from '../styles/elements/Block.module.scss';
 
 export default function Contact() {
   const getFunctionInit = getFunctions();
@@ -41,8 +42,8 @@ export default function Contact() {
   };
 
   return (
-    <section className="mt-24" id="contact">
-      <h1 className="text-xl font-bold">Contact</h1>
+    <section className={style.block} id="contact">
+      <h1 className={style.block__title}>Company</h1>
       <div className="mt-4">
         <p className="font-medium text-gray-900 truncate">弊社へのお問い合わせは 下記フォームにご記入の上 送信ください。</p>
         <div className="mt-4">
