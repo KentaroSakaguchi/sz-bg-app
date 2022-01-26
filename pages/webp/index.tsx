@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
 import Uploader from '../../components/Uploader';
 import Contact from  '../../components/Contact';
-import Top from  '../../components/Top';
+import Webp from  '../../components/Webp';
 import Donation from '../../components/Donation';
 import { css, jsx } from '@emotion/react'
 import 'scroll-behavior-polyfill';
@@ -34,8 +34,8 @@ export default function Home() {
   }
 
   return (
-    <Layout title="" noindex={false} description="画像(JPG、PNG）の文字認識を行い、オンランでテキストに変換します。 無料でご利用いただけます。ぜひご活用ください。" lp={true}>
-      <Top />
+    <Layout title="" noindex={false} description="画像(JPG、PNG）からWebPへのコンバーター。 画像(JPG、PNG）からWebPへの変換ツールです。ぜひご活用ください。" lp={true}>
+      <Webp />
       <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
         <Uploader />
         {/* <Donation /> */}

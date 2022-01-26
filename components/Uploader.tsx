@@ -156,7 +156,7 @@ export default function Uploader({}) {
     // console.log(log)
     progressStyleChange(css`width: ${log.progress * 100}%;`);
     if (log.status === 'recognizing text' && log.progress * 100 === 100 && rexultText) {
-      location.href = `${location.origin}/#result`;
+      location.href = `${location.origin + location.pathname}#result`;
     }
 
     camera ? StartCamera('open') : StartCamera('close');
