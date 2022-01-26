@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
 
-export default function Layout({children, title = '画像(JPG、PNG）の文字認識を行い、オンランでテキストに変換します。 無料でご利用いただけます。', noindex = false, description}: {children: any, title: string, noindex: boolean, description: string}) {
+export default function Layout({children, title = '画像(JPG、PNG）の文字認識を行い、オンランでテキストに変換します。 無料でご利用いただけます。', noindex = false, description }: {children: any, title: string, noindex: boolean, description: string}) {
   return (
     <div>
       <Head>
@@ -23,7 +23,15 @@ export default function Layout({children, title = '画像(JPG、PNG）の文字�
         <meta property="og:site_name" content={title ? title + ' | extract text from image online' : '画像からテキスト抽出オンラインツール | extract text from image online' } />
         { noindex ? <meta name="robots" content="noindex" /> : <meta name="robots" content="index,follow" /> }
       </Head>
-      {children}
+      { title && <Header /> }
+      { title ?
+        <div className="px-8 mt-4 md:mt-16 lg:mt-20">
+          {children}
+        </div> :
+        <div className="mt-4 md:mt-16 lg:mt-20">
+          {children}
+        </div>
+      }
       <Footer />
     </div>
   );
