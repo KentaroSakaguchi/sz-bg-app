@@ -1,13 +1,13 @@
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/Layout';
-import Uploader from '../components/Uploader';
-import Contact from  '../components/Contact';
-import Top from  '../components/Top';
-import Donation from '../components/Donation';
+import Layout from '../../components/Layout';
+import Uploader from '../../components/Uploader';
+import Contact from  '../../components/Contact';
+import Top from  '../../components/Top';
+import Donation from '../../components/Donation';
 import { css, jsx } from '@emotion/react'
 import 'scroll-behavior-polyfill';
-import '../src/firebase';
+import '../../src/firebase';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import axios from 'axios';
 import jsonpAdapter from 'axios-jsonp';

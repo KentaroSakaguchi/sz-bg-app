@@ -5,7 +5,7 @@ import style from '../../styles/elements/Section.module.scss';
 
 export default function privacyPolicy() {
   return (
-    <Layout title="プライバシーポリシー" noindex={true} description="プライバシーポリシーのページです。">
+    <Layout title="プライバシーポリシー" noindex={true} description="プライバシーポリシーのページです。" lp={false}>
       <div className={style.section}>
         <div className={style.section__inner}>
           <h1 className={style.section__title}>プライバシーポリシー</h1>

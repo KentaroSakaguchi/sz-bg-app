@@ -5,7 +5,7 @@ import style from '../../styles/elements/Section.module.scss';
 
 export default function termsOfService() {
   return (
-    <Layout title="利用規約" noindex={true} description="利用規約のページです。">
+    <Layout title="利用規約" noindex={true} description="利用規約のページです。" lp={false}>
       <div className={style.section}>
         <div className={style.section__inner}>
           <h1 className={style.section__title}>利用規約</h1>
