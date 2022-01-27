@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
-import Uploader from '../../components/Uploader';
+import Converter from '../../components/Converter';
 import Contact from  '../../components/Contact';
 import Webp from  '../../components/Webp';
 import Donation from '../../components/Donation';
@@ -37,7 +37,7 @@ export default function Home() {
     <Layout title="画像からからWebPへのコンバーター" noindex={false} description="画像(JPG、PNG）からWebPへのコンバーター。 画像(JPG、PNG）からWebPへの変換ツールです。ぜひご活用ください。" lp={true}>
       <Webp />
       <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
-        <Uploader />
+        <Converter />
         {/* <Donation /> */}
       </div>
     </Layout>
