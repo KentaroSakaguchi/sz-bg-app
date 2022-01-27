@@ -17,7 +17,7 @@ export default function Converter({}) {
   const addMessageFunctions = httpsCallable(getFunctionInit, 'addMessage');
   const validateMb = 10000000; // 10MB
   const [fileTypeJpeg, fileTypePng] = ['image/jpeg', 'image/png'];
-  const [imgTypeErrorText, imgSizeErrorText, imgCountErrorText] = ['対応しているフォーマットはPNG, JPGになります', '10MBまで', '画像1枚のみドロップしてください'];
+  const [imgTypeErrorText, imgSizeErrorText, imgCountErrorText] = ['対応しているフォーマットはPNG, JPGになります', '10MBまで', '画像5枚以内でドロップしてください'];
   const [log, setLog] = useState({status: '', progress: 0});
 
   const uploadToServer = async (data) => {
@@ -114,7 +114,8 @@ export default function Converter({}) {
     event.preventDefault();
     dropStyleChange(null);
 
-    if (event.dataTransfer.files.length > 1) {
+    if (event.dataTransfer.files.length > 5) {
+      // 画像枚数バリデーション
       setErrorText(imgCountErrorText);
       return;
     }

@@ -23,8 +23,10 @@ const saveFile = async (file) => {
   await fs.unlinkSync(file.filepath);
   sharp(`./public/${file.originalFilename}`)
     .rotate()
-    .grayscale()
-    .toFile(`./public/output.jpg`, (err, info) => {
+    .webp({
+      quality: 80
+    })
+    .toFile(`./public/output.webp`, (err, info) => {
 
     });
   return;

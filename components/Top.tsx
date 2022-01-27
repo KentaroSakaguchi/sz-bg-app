@@ -45,29 +45,29 @@ export default function Top({}) {
                     <div className="flex items-center space-x-6 lg:space-x-8">
                       <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                         <div className="w-44 h-64 rounded-lg overflow-hidden sm:opacity-0 lg:opacity-100">
-                          <img src="/iStock-1167885500.jpg" alt="" className="w-full h-full object-center object-cover" />
+                          <img src="/iStock-1167885500.webp" alt="" className="w-full h-full object-center object-cover" />
                         </div>
                         <div className="w-44 h-64 rounded-lg overflow-hidden">
-                          <img src="/iStock-1181169462.jpg" alt="" className="w-full h-full object-center object-cover" />
-                        </div>
-                      </div>
-                      <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
-                        <div className="w-44 h-64 rounded-lg overflow-hidden">
-                          <img src="/iStock-1177479373.jpg" alt="" className="w-full h-full object-center object-cover" />
-                        </div>
-                        <div className="w-44 h-64 rounded-lg overflow-hidden">
-                          <img src="/iStock-1172891970.jpg" alt="" className="w-full h-full object-center object-cover" />
-                        </div>
-                        <div className="w-44 h-64 rounded-lg overflow-hidden">
-                          <img src="/iStock-1171143007.jpg" alt="" className="w-full h-full object-center object-cover" />
+                          <img src="/iStock-1181169462.webp" alt="" className="w-full h-full object-center object-cover" />
                         </div>
                       </div>
                       <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
                         <div className="w-44 h-64 rounded-lg overflow-hidden">
-                          <img src="/iStock-1161358581.jpg" alt="" className="w-full h-full object-center object-cover" />
+                          <img src="/iStock-1177479373.webp" alt="" className="w-full h-full object-center object-cover" />
                         </div>
                         <div className="w-44 h-64 rounded-lg overflow-hidden">
-                          <img src="/iStock-1216706463.jpg" alt="" className="w-full h-full object-center object-cover" />
+                          <img src="/iStock-1172891970.webp" alt="" className="w-full h-full object-center object-cover" />
+                        </div>
+                        <div className="w-44 h-64 rounded-lg overflow-hidden">
+                          <img src="/iStock-1171143007.webp" alt="" className="w-full h-full object-center object-cover" />
+                        </div>
+                      </div>
+                      <div className="flex-shrink-0 grid grid-cols-1 gap-y-6 lg:gap-y-8">
+                        <div className="w-44 h-64 rounded-lg overflow-hidden">
+                          <img src="/iStock-1161358581.webp" alt="" className="w-full h-full object-center object-cover" />
+                        </div>
+                        <div className="w-44 h-64 rounded-lg overflow-hidden">
+                          <img src="/iStock-1216706463.webp" alt="" className="w-full h-full object-center object-cover" />
                         </div>
                       </div>
                     </div>
@@ -86,10 +86,10 @@ export default function Top({}) {
             <h2 className="text-xl font-bold">Menu</h2>
             <div css={wrapper}>
               <div css={cardWrapper}>
-                <MediaCard title="画像からテキスト抽出ツール" image="/iStock-1186357899.jpg" text="画像(JPG、PNG）の文字認識を行い、テキストに変換します。" href="/extract"/>
+                <MediaCard title="画像からテキスト抽出ツール" image="/iStock-1186357899.webp" text="画像(JPG、PNG）の文字認識を行い、テキストに変換します。" href="/extract"/>
               </div>
               <div css={cardWrapper}>
-                <MediaCard title="画像からWebPコンバーター" image="/iStock-1152109336.jpg" text="画像(JPG、PNG）からWebPへの変換ツールです。" href="/webp" />
+                <MediaCard title="画像からWebPコンバーター" image="/iStock-1152109336.webp" text="画像(JPG、PNG）からWebPへの変換ツールです。" href="/webp" />
               </div>
             </div>
           </div>
