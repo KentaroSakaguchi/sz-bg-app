@@ -33,11 +33,8 @@ export default function Home() {
   }
 
   return (
-    <Layout title="" noindex={false} description="画像(JPG、PNG）の文字認識を行い、オンランでテキストに変換します。 無料でご利用いただけます。ぜひご活用ください。" lp={true}>
+    <Layout title="画像を最適化するオンラインツール" noindex={false} description="画像をさまざまな形に最適化するオンラインツールです。 ぜひご活用ください。" lp={true}>
       <Top />
-      {/* <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
-        <Uploader />
-      </div> */}
     </Layout>
   )
 }

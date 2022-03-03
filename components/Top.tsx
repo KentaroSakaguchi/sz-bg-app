@@ -34,7 +34,7 @@ export default function Top({}) {
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:static">
             <div className="sm:max-w-lg">
             <h1 className="text-4xl font font-extrabold tracking-tight text-gray-900 sm:text-6xl">
-              画像を最適化する / Optimize the image
+              画像を最適化する<br />Optimize the image
               </h1>
               <p className="mt-4 text-xl text-gray-500">画像をさまざまな形に最適化する、オンラインツール</p>
             </div>
@@ -85,6 +85,9 @@ export default function Top({}) {
           <div className="pt-16 pb-80 sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48" id="menu">
             <h2 className="text-xl font-bold">Menu</h2>
             <div css={wrapper}>
+              <div css={cardWrapper}>
+                <MediaCard title="LP作成ツール" image="/iStock-1217908164.jpg" text="コードを書かずにオンライン上でLPを制作できます。" href="/generater"/>
+              </div>
               <div css={cardWrapper}>
                 <MediaCard title="画像からテキスト抽出ツール" image="/iStock-1186357899.webp" text="画像(JPG、PNG）の文字認識を行い、テキストに変換します。" href="/extract"/>
               </div>

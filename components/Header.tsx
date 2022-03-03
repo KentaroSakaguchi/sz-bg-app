@@ -42,13 +42,10 @@ export default function Header({}) {
             </div>
           </div>
           <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+            <a href="/generater" className="font-medium text-gray-500 hover:text-gray-900">LP作成ツール</a>
             <a href="/extract" className="font-medium text-gray-500 hover:text-gray-900">画像からテキスト抽出ツール</a>
-
             <a href="/webp" className="font-medium text-gray-500 hover:text-gray-900">画像をWebPに変換</a>
-
             <a href="/contact" className="font-medium text-gray-500 hover:text-gray-900">Contact</a>
-
-            <a href="/company" className="font-medium text-gray-500 hover:text-gray-900">Company</a>
 
             {/* <a href="#" className="font-medium text-gray-500 hover:text-gray-900">Company</a>
 
@@ -74,12 +71,10 @@ export default function Header({}) {
               </div>
             </div>
             <div className="px-2 pt-2 pb-3 space-y-1">
+              <a href="/generater" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">LP作成ツール</a>
               <a href="/extract" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">画像からテキスト抽出ツール</a>
               <a href="/webp" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">画像をWebPに変換</a>
               <a href="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Contact</a>
-
-              <a href="/company" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Company</a>
-
               {/* <a href="#" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50">Company</a> */}
             </div>
             {/* <a href="#" className="block w-full px-5 py-3 text-center font-medium text-indigo-600 bg-gray-50 hover:bg-gray-100">

@@ -9,6 +9,7 @@ export const config = {
 };
 
 const post = async (req, res) => {
+  console.log(req)
   const form = new formidable.IncomingForm();
   form.parse(req, async function (err, fields, files) {
     await saveFile(files.file);
@@ -17,6 +18,8 @@ const post = async (req, res) => {
 };
 
 const saveFile = async (file) => {
+  // const buffer = Buffer.from(file);
+  // console.log(buffer)
   // console.log(file)
   const data = fs.readFileSync(file.filepath);
   fs.writeFileSync(`./public/${file.originalFilename}`, data);

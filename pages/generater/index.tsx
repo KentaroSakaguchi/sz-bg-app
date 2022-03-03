@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import React, { useState, useEffect } from 'react';
 import Layout from '../../components/Layout';
-import Uploader from '../../components/Uploader';
+import Generate from '../../components/Generate';
 import Contact from  '../../components/Contact';
-import Extract from  '../../components/Extract';
+import GenerateTop from  '../../components/GenerateTop';
 import Donation from '../../components/Donation';
 import { css, jsx } from '@emotion/react'
 import 'scroll-behavior-polyfill';
@@ -34,10 +34,10 @@ export default function Home() {
   }
 
   return (
-    <Layout title="画像からテキスト抽出ツール" noindex={false} description="画像(JPG、PNG）の文字認識を行い、オンランでテキストに変換します。 ぜひご活用ください。" lp={true}>
-      <Extract />
+    <Layout title="LP作成ツール" noindex={false} description="ノーコードでオンライン上でLPを制作できます。" lp={true}>
+      <GenerateTop />
       <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
-        <Uploader />
+        <Generate />
         {/* <Donation /> */}
       </div>
     </Layout>

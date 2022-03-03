@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { css, jsx } from '@emotion/react';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, getBlob } from 'firebase/storage';
 import { getFunctions, httpsCallable } from 'firebase/functions';
-import axios from 'axios';
-import Compressor from 'compressorjs';
-import { createWorker } from 'tesseract.js';
-import { StartCamera, CameraImageStyle, CameraButtonStyle, CameraCloseButtonStyle } from './UploaderModules/StartCamera';
-import { CopyText } from './UploaderModules/CopyText';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 export default function Converter({}) {
   const [imageURLs, setCreateObjectURLs] = useState([]);
@@ -15,10 +11,22 @@ export default function Converter({}) {
   const [imageCounterValue, imageCounter] = useState(0);
   const getFunctionInit = getFunctions();
   const addMessageFunctions = httpsCallable(getFunctionInit, 'addMessage');
-  const validateMb = 10000000; // 10MB
+  const writeWebpFunctions = httpsCallable(getFunctionInit, 'writeWebp');
+  const validateMb = 2000000; // 1MB
   const [fileTypeJpeg, fileTypePng] = ['image/jpeg', 'image/png'];
-  const [imgTypeErrorText, imgSizeErrorText, imgCountErrorText] = ['対応しているフォーマットはPNG, JPGになります', '10MBまで', '画像5枚以内でドロップしてください'];
-  const [log, setLog] = useState({status: '', progress: 0});
+  const [imgTypeErrorText, imgSizeErrorText, imgCountErrorText] = ['対応しているフォーマットはPNG, JPGになります', '2MBまで', '画像1枚以内でドロップしてください'];
+  const [disabled, setDisabled] = useState(false);
+  const [disabledText, setDisabledText] = useState('データ変換中');
+  const [downloadUrl, setDownloadUrl] = useState('');
+
+  const disabledStyle = css`
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  `;
 
   const uploadToServer = async (data) => {
 
@@ -37,27 +45,8 @@ export default function Converter({}) {
     }
 
     setErrorText(null);
-
-    // extractText
-    const worker = createWorker({
-      logger: (m) => {
-        setLog({
-          status: m.status,
-          progress: m.progress,
-        });
-      },
-    });
-
-    // 画像圧縮
-    new Compressor(data, {
-      quality: 0.1,
-
-      success(result) {
-        // console.log(result)
-        const resultFiles = result;
-        // extractText(resultFiles)
-      }
-    })
+    setDisabled(true);
+    setDisabledText('データ読み込み中');
 
     if (location.host === 'localhost:3000') {
       const body = new FormData();
@@ -67,8 +56,14 @@ export default function Converter({}) {
         method: 'POST',
         body
       }).then(() => {
-        console.log(location.href + data.name)
-        // extractText(`${location.href}/output.jpg`);
+        const reader = new FileReader();
+        reader.readAsDataURL(data);
+        reader.onload = async() => {
+          console.log(reader);
+        }
+        setDisabled(false);
+        setDownloadUrl(`/${data.name}`);
+        location.href = `${location.origin + location.pathname}#download`;
       });
 
     } else {
@@ -77,13 +72,28 @@ export default function Converter({}) {
 
       uploadBytesResumable(imageRef, data, data)
         .then((snapshot) => {
-          // console.log('Uploaded', snapshot.totalBytes, 'bytes.');
-          // console.log('File metadata:', snapshot.metadata);
           // Let's get a download URL for the file.
           getDownloadURL(snapshot.ref).then((url) => {
-            // console.log('File available at', url);
             addMessageFunctions(`画像up: ${url}`);
+            setDisabledText('画像変換中');
           });
+
+          const reader = new FileReader();
+          reader.readAsDataURL(data);
+          reader.onload = async() => {
+            const imageBase64Data = reader.result?.toString()?.replace(/data:.*\/.*;base64,/, '');
+            const imageName = data.name;
+            const sendData = { base64: imageBase64Data, imageName: `webp-${imageName}` }
+            writeWebpFunctions(sendData).then((v) => {
+              setDisabled(false);
+              setDisabledText('');
+              const webpImageRef = ref(storage, 'images/' + `webp-${imageName.toLowerCase().replace('jpg', 'webp').replace('png', 'webp').replace('jpeg', 'webp')}`);
+              // Get the download URL
+              getBlob(webpImageRef).then((blob) => {
+                setDownloadUrl(URL.createObjectURL(blob));
+              });
+            });
+          }
 
         }).catch((error) => {
           console.error('Upload failed', error);
@@ -114,7 +124,7 @@ export default function Converter({}) {
     event.preventDefault();
     dropStyleChange(null);
 
-    if (event.dataTransfer.files.length > 5) {
+    if (event.dataTransfer.files.length > 1) {
       // 画像枚数バリデーション
       setErrorText(imgCountErrorText);
       return;
@@ -128,18 +138,18 @@ export default function Converter({}) {
     });
   };
 
-  useEffect(() => {
-    // console.log(log)
-    // if (log.status === 'recognizing text' && log.progress * 100 === 100 && rexultText) {
-    //   location.href = `${location.origin + location.pathname}#result`;
-    // }
-  }, [setCreateObjectNames, setCreateObjectURLs]);
-
-
   return (
     <section className="mt-16">
       <h1 className="text-xl font-bold" id="upload">Upload</h1>
-      <div>
+      <div className="relative">
+        { disabled &&
+          <div css={disabledStyle} className="flex justify-center items-center pb-6 bg-white">
+            <LoadingButton
+              loading
+            />
+            <span className="text-xl font-bold text-gray">{disabledText}</span>
+          </div>
+        }
         <div
           className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md transition-all"
           onDragOver={dragStart}
@@ -155,7 +165,7 @@ export default function Converter({}) {
               <p className="text-xl font-bold">drag and drop</p>
             </div>
             <p className="text-xs text-gray-500">
-              PNG, JPG up to 10MB
+              PNG, JPG up to 1MB
             </p>
           </div>
         </div>
@@ -176,6 +186,16 @@ export default function Converter({}) {
           </label>
         </div>
       </div>
+      {downloadUrl &&
+        <div className="mt-16" id="download">
+          <div className="max-w-md mx-auto flex items-center justify-center">
+            <img src={downloadUrl} />
+          </div>
+          <div className="mt-8 flex items-center justify-center">
+            <a href={downloadUrl} download className="cursor-pointer inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" type="button">Download</a>
+          </div>
+        </div>
+      }
     </section>
   );
 }

@@ -1,27 +1,22 @@
-import * as functions from "firebase-functions";
-import {IncomingWebhook} from "@slack/webhook";
+import * as functions from 'firebase-functions';
+import {IncomingWebhook} from '@slack/webhook';
+import * as admin from 'firebase-admin';
 
-import {Storage} from "@google-cloud/storage";
-import * as path from "path";
-import * as sharp from "sharp";
+// import * as path from 'path';
+import * as sharp from 'sharp';
+// const fs = require('fs');
+// const os = require('os');
 
-// const THUMB_MAX_WIDTH = 200;
-// const THUMB_MAX_HEIGHT = 200;
-
-const gcs = new Storage();
-
-// import axios from "axios";
+admin.initializeApp();
+// const tempDir: string = os.tmpdir();
 
 const webhook = new IncomingWebhook(functions.config().slack_web_hook.url);
-
-// Start writing Firebase Functions
-// https://firebase.google.com/docs/functions/typescript
 
 /**
  * Slack通知用メソッド
  * @param {any} data
  */
-async function sendWebhookSlack(data: any = "sz-bg-app にお問い合わせ") {
+async function sendWebhookSlack(data: any = 'sz-bg-app にお問い合わせ') {
   await webhook.send({
     text: `sz-bg-app にお問い合わせ: ${data}`,
   });
@@ -31,48 +26,37 @@ export const addMessage = functions.https.onCall(async (data) => {
   await sendWebhookSlack(data);
 });
 
-export const convertWebp = functions.storage.object()
-    .onFinalize(async (object: any) => {
-      const fileBucket = object.bucket; // The Storage bucket that contains the file.
-      const filePath = object.name; // File path in the bucket.
-      const contentType = object.contentType; // File content type.
 
-      // Exit if this is triggered on a file that is not an image.
-      if (!contentType.startsWith("image/")) {
-        functions.logger.log("This is not an image.");
-        return null;
-      }
+export const writeWebpInit = async (data: any) => {
+  const metadata = {
+    contentType: 'image/webp',
+  };
 
-      // Get the file name.
-      const fileName = path.basename(filePath);
-      // Exit if the image is already a thumbnail.
-      if (fileName.startsWith("thumb_")) {
-        functions.logger.log("Already a Thumbnail.");
-        return null;
-      }
+  const bucket = admin.storage().bucket();
+  const bucketFilePath = `images/${data.imageName.toLowerCase().replace('jpg', 'webp').replace('png', 'webp').replace('jpeg', 'webp')}`;
+  // 画像をBase64からBufferに変換する
+  const buffer = Buffer.from(data.base64, 'base64');
+  const file = bucket.file(bucketFilePath);
+  await file.save(buffer);
+  // Cloud Storageへの画像の追加
 
-      // Download file from bucket.
-      const bucket = gcs.bucket(fileBucket);
+  const upLoadStream = bucket.file(bucketFilePath).createWriteStream({metadata});
+  const pipeline = sharp();
+  pipeline
+      .rotate()
+      .webp({
+        quality: 80,
+      })
+      .pipe(upLoadStream);
 
-      const metadata = {
-        contentType: contentType,
-      };
-      // We add a 'thumb_' prefix to thumbnails file name. That's where we'll upload the thumbnail.
-      const thumbFileName = `thumb_${fileName}`;
-      const thumbFilePath = path.join(path.dirname(filePath), thumbFileName);
-      // Create write stream for uploading thumbnail
-      const thumbnailUploadStream = bucket.file(thumbFilePath).createWriteStream({metadata});
+  bucket.file(bucketFilePath).createReadStream().pipe(pipeline);
 
-      // Create Sharp pipeline for resizing the image and use pipe to read from bucket read stream
-      const pipeline = sharp();
-      pipeline
-          .rotate()
-          .grayscale()
-          .pipe(thumbnailUploadStream);
+  return new Promise((resolve, reject) => {
+    upLoadStream.on('finish', resolve).on('error', reject);
+    return bucketFilePath;
+  });
+};
 
-      bucket.file(filePath).createReadStream().pipe(pipeline);
-
-      return new Promise((resolve, reject) =>
-        thumbnailUploadStream.on("finish", resolve).on("error", reject));
-    });
-
+export const writeWebp = functions.https.onCall(async (data) => {
+  return await writeWebpInit(data);
+});
