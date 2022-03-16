@@ -16,7 +16,7 @@ const webhook = new IncomingWebhook(functions.config().slack_web_hook.url);
  * Slack通知用メソッド
  * @param {any} data
  */
-async function sendWebhookSlack(data: any = 'sz-bg-app にお問い合わせ') {
+async function sendWebhookSlack(data: string = 'sz-bg-app にお問い合わせ') {
   await webhook.send({
     text: `sz-bg-app にお問い合わせ: ${data}`,
   });

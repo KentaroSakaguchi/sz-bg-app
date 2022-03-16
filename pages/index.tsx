@@ -12,7 +12,7 @@ import axios from 'axios';
 import jsonpAdapter from 'axios-jsonp';
 
 // 認証
-const init = (account: any, password: any) => {
+const init = (account: string, password: string) => {
   const auth = getAuth();
   signInWithEmailAndPassword(auth, account, password)
     .then((userCredential) => {

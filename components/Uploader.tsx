@@ -127,7 +127,7 @@ export default function Uploader({}) {
     dropStyleChange(null);
   };
 
-  const dragDrop = (event) => {
+  const dragDrop = (event: React.DragEvent) => {
     event.preventDefault();
     dropStyleChange(null);
 
@@ -136,7 +136,7 @@ export default function Uploader({}) {
       return;
     }
 
-    Array.from(event.dataTransfer.files).forEach((value: any) => {
+    Array.from(event.dataTransfer.files).forEach((value) => {
       imageCounter((data) => data + 1);
       setCreateObjectURLs((imageURLs) => [...imageURLs, URL.createObjectURL(value)]);
       setCreateObjectNames((imageNames) => [...imageNames, value.name]);

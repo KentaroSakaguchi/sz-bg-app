@@ -42,7 +42,6 @@ export default function Header({}) {
             </div>
           </div>
           <div className="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
-            <a href="/generater" className="font-medium text-gray-500 hover:text-gray-900">LP作成ツール</a>
             <a href="/extract" className="font-medium text-gray-500 hover:text-gray-900">画像からテキスト抽出ツール</a>
             <a href="/webp" className="font-medium text-gray-500 hover:text-gray-900">画像をWebPに変換</a>
             <a href="/contact" className="font-medium text-gray-500 hover:text-gray-900">Contact</a>

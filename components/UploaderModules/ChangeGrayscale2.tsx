@@ -54,11 +54,11 @@ export default function ChangeGrayscale (imageUrl) {
       ctx.drawImage(img, 0, 0);
 
       // 画像の各ピクセルをグレースケールに変換する
-      const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const pixels: ImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       for (let y = 0; y < pixels.height; y++) {
           for (let x = 0; x < pixels.width; x++) {
               const i = (y * 4) * pixels.width + x * 4;
-              const parseValue: any = ((pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3)
+              const parseValue: string = String(((pixels.data[i] + pixels.data[i + 1] + pixels.data[i + 2]) / 3))
               const rgb = parseInt(parseValue, 10);
               pixels.data[i] = rgb;
               pixels.data[i + 1] = rgb;
